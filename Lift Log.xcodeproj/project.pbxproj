@@ -7,20 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D069499E2BF7335600F1BD89 /* WorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D069499D2BF7335600F1BD89 /* WorkoutViewModel.swift */; };
+		D06949A02BF7336B00F1BD89 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D069499F2BF7336A00F1BD89 /* HomeView.swift */; };
 		D06DA5C62BF6108D00DE2F6E /* Lift_LogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06DA5C52BF6108D00DE2F6E /* Lift_LogApp.swift */; };
 		D06DA5C82BF6108D00DE2F6E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06DA5C72BF6108D00DE2F6E /* ContentView.swift */; };
 		D06DA5CA2BF6108D00DE2F6E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D06DA5C92BF6108D00DE2F6E /* Assets.xcassets */; };
 		D06DA5CD2BF6108D00DE2F6E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D06DA5CC2BF6108D00DE2F6E /* Preview Assets.xcassets */; };
 		D06DA5D52BF610BE00DE2F6E /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06DA5D42BF610BE00DE2F6E /* WorkoutView.swift */; };
+		D08ABE3D2BF68E5800A0873D /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08ABE3C2BF68E5800A0873D /* Workout.swift */; };
+		D08ABE3F2BF6A4D800A0873D /* WorkoutSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08ABE3E2BF6A4D800A0873D /* WorkoutSet.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D069499D2BF7335600F1BD89 /* WorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewModel.swift; sourceTree = "<group>"; };
+		D069499F2BF7336A00F1BD89 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		D06DA5C22BF6108D00DE2F6E /* Lift Log.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lift Log.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D06DA5C52BF6108D00DE2F6E /* Lift_LogApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lift_LogApp.swift; sourceTree = "<group>"; };
 		D06DA5C72BF6108D00DE2F6E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D06DA5C92BF6108D00DE2F6E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D06DA5CC2BF6108D00DE2F6E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D06DA5D42BF610BE00DE2F6E /* WorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutView.swift; sourceTree = "<group>"; };
+		D08ABE3C2BF68E5800A0873D /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		D08ABE3E2BF6A4D800A0873D /* WorkoutSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSet.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,6 +61,8 @@
 		D06DA5C42BF6108D00DE2F6E /* Lift Log */ = {
 			isa = PBXGroup;
 			children = (
+				D08ABE402BF6A5A100A0873D /* ViewModels */,
+				D08ABE3B2BF68E4C00A0873D /* Models */,
 				D06DA5D32BF610AA00DE2F6E /* Views */,
 				D06DA5C52BF6108D00DE2F6E /* Lift_LogApp.swift */,
 				D06DA5C72BF6108D00DE2F6E /* ContentView.swift */,
@@ -74,8 +84,26 @@
 			isa = PBXGroup;
 			children = (
 				D06DA5D42BF610BE00DE2F6E /* WorkoutView.swift */,
+				D069499F2BF7336A00F1BD89 /* HomeView.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		D08ABE3B2BF68E4C00A0873D /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				D08ABE3C2BF68E5800A0873D /* Workout.swift */,
+				D08ABE3E2BF6A4D800A0873D /* WorkoutSet.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		D08ABE402BF6A5A100A0873D /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				D069499D2BF7335600F1BD89 /* WorkoutViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -148,9 +176,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D08ABE3F2BF6A4D800A0873D /* WorkoutSet.swift in Sources */,
+				D06949A02BF7336B00F1BD89 /* HomeView.swift in Sources */,
 				D06DA5C82BF6108D00DE2F6E /* ContentView.swift in Sources */,
 				D06DA5D52BF610BE00DE2F6E /* WorkoutView.swift in Sources */,
 				D06DA5C62BF6108D00DE2F6E /* Lift_LogApp.swift in Sources */,
+				D069499E2BF7335600F1BD89 /* WorkoutViewModel.swift in Sources */,
+				D08ABE3D2BF68E5800A0873D /* Workout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

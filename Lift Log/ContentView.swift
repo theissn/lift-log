@@ -8,17 +8,14 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var showWorkoutSheet = false
-    
     var body: some View {
-        VStack {
-            Button("Start") {
-                showWorkoutSheet.toggle()
-            }
+        TabView {
+            HomeView()
+                .tabItem {
+                    Image(systemName: "house")
+                }
         }
-        .sheet(isPresented: $showWorkoutSheet, content: {
-            WorkoutView()
-        })
+        .tint(.primary)
     }
 }
 
