@@ -15,81 +15,110 @@ struct WorkoutView: View {
     @State private var showingPopover = false
     
     @ObservedObject var viewModel: WorkoutViewModel
-
+    
+    @State var sets: [WorkoutSet] = []
     
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
         NavigationStack {
             VStack {
-                HStack {
-                    VStack {
-                        Text("Duration")
-                            .fontWeight(.bold)
-                            .font(.system(size: 14, design: .monospaced))
-                            .padding(.bottom, 8)
-                        
-                        Text("\(currentWorkoutTime)")
-                            .font(.system(size: 20, design: .monospaced))
-                    }
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .padding()
-                    .border(Color(.systemGray4).opacity(0.8))
-                    
-                    
-                    VStack {
-                        Text("Excercise")
-                            .fontWeight(.bold)
-                            .font(.system(size: 14, design: .monospaced))
-                            .padding(.bottom, 8)
-                        
-                        HStack {
-                            Text("Squat")
-                                .font(.system(size: 18, design: .monospaced))
+                ScrollView {
+                    LazyVGrid(columns: [
+                        GridItem(.flexible()),
+                        GridItem(.flexible()),
+                    ]) {
+                        VStack {
+                            Text("Duration")
+                                .fontWeight(.bold)
+                                .font(.system(size: 14, design: .monospaced))
+                                .padding(.bottom, 8)
                             
-                            Button {
-                                self.showingPopover = true
-                            } label: {
-                                Image(systemName: "info.circle")
-                                    .imageScale(.small)
-                                    .foregroundColor(.primary)
+                            Text("\(currentWorkoutTime)")
+                                .font(.system(size: 20, design: .monospaced))
+                        }
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .border(Color(.systemGray4).opacity(0.8))
+                        
+                        
+                        VStack {
+                            Text("Excercise")
+                                .fontWeight(.bold)
+                                .font(.system(size: 14, design: .monospaced))
+                                .padding(.bottom, 8)
+                            
+                            HStack {
+                                Text(self.viewModel.lift.rawValue)
+                                    .font(.system(size: 20, design: .monospaced))
+                                
+                                Button {
+                                    self.showingPopover = true
+                                } label: {
+                                    Image(systemName: "info.circle")
+                                        .imageScale(.small)
+                                        .foregroundColor(.primary)
+                                }
                             }
                         }
-                    }
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .padding()
-                    .border(Color(.systemGray4).opacity(0.8))
-                    
-                    VStack {
-                        Text("Day")
-                            .fontWeight(.bold)
-                            .font(.system(size: 14, design: .monospaced))
-                            .padding(.bottom, 8)
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .border(Color(.systemGray4).opacity(0.8))
                         
-                        Text("\(startTime.formatted(Date.FormatStyle().weekday(.abbreviated)))")
-                            .font(.system(size: 20, design: .monospaced))
+                        VStack {
+                            Text("Day")
+                                .fontWeight(.bold)
+                                .font(.system(size: 14, design: .monospaced))
+                                .padding(.bottom, 8)
+                            
+                            Text("\(startTime.formatted(Date.FormatStyle().weekday(.abbreviated)))")
+                                .font(.system(size: 20, design: .monospaced))
+                        }
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .border(Color(.systemGray4).opacity(0.8))
+                        
+                        VStack {
+                            Text("Max")
+                                .fontWeight(.bold)
+                                .font(.system(size: 14, design: .monospaced))
+                                .padding(.bottom, 8)
+                            
+                            Text("XXX kg")
+                                .font(.system(size: 20, design: .monospaced))
+                        }
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .border(Color(.systemGray4).opacity(0.8))
                     }
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .padding()
-                    .border(Color(.systemGray4).opacity(0.8))
-                }
-                .padding(.horizontal, 8)
-                .padding(.top)
-                
-                ScrollView {
+                    .padding(.horizontal, 8)
+                    .padding(.top)
+                    
                     VStack {
                         Divider()
                             .padding(.top)
                         
-                        WorkoutSetCell()
-                        WorkoutSetCell()
+                        ForEach(sets) { set in
+                            WorkoutSetCell(set: set)
+                        }
+                        
+//                        Button {
+//                        } label: {
+//                            HStack {
+//                                Image(systemName: "plus.app")
+//                                Text("Add Set")
+//                            }
+//                            .frame(maxWidth: .infinity)
+//                            .padding()
+//                            .background(Color(.systemGray4))
+//                        }
+//                        .padding()
                     }
-                    .frame(minWidth: 0, maxWidth: .infinity)
                 }
             }
             .sheet(isPresented: self.$showingPopover, content: {
                 MaxesView(viewModel: self.viewModel)
-                    .padding()
+                //                    .padding()
             })
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -120,8 +149,10 @@ struct WorkoutView: View {
                 if let formattedDifference = formatter.string(from: difference) {
                     currentWorkoutTime = formattedDifference
                 }
-
+                
             }
+            
+            self.sets = viewModel.getSets(lift: self.viewModel.lift)
         }
         .onDisappear {
             self.timer?.invalidate()
@@ -131,7 +162,7 @@ struct WorkoutView: View {
     private func dateTime() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "HH:mm"
-
+        
         return dateFormatter.string(from: self.startTime)
     }
 }
@@ -139,6 +170,8 @@ struct WorkoutView: View {
 struct WorkoutSetCell: View {
     @State var isChecked = false
     @State var showEditSheet = false
+    
+    @State var set: WorkoutSet
     
     var body: some View {
         VStack {
@@ -150,18 +183,21 @@ struct WorkoutSetCell: View {
                         .font(.system(size: 18, weight: .regular, design: .monospaced))
                         .foregroundColor(.primary)
                 }
+                .padding(.trailing, 8)
                 
                 Button {
                     isChecked.toggle()
                 } label: {
                     VStack(alignment: .leading) {
-                        Text("Set 1")
+                        Text("Set \(set.setNum)")
                             .font(.system(size: 16, design: .monospaced))
                             .fontWeight(.semibold)
                         
-                        Text("100 kg x 5")
+                        
+                        Text(getPrettyWeight())
                             .font(.system(size: 16, design: .monospaced))
                             .fontWeight(.semibold)
+                            .padding(.top, 4)
                     }
                     
                     Spacer()
@@ -173,7 +209,7 @@ struct WorkoutSetCell: View {
                     }
                 }
                 .foregroundStyle(.primary)
-
+                
             }
         }
         .sheet(isPresented: $showEditSheet) {
@@ -185,6 +221,15 @@ struct WorkoutSetCell: View {
         .onTapGesture {
             self.isChecked.toggle()
         }
+    }
+    
+    private func getPrettyWeight() -> String {
+        let unit = UserDefaults.standard.string(forKey: "unit") ?? "kg"
+        
+        let plus = set.amrap == nil ? "" : "+"
+        
+        return "\(set.weight)\(unit) @ \(set.reps)\(plus)"
+        
     }
 }
 

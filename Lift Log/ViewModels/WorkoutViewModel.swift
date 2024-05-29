@@ -18,6 +18,7 @@ class WorkoutViewModel: ObservableObject {
     @AppStorage("ohpMax") var ohpMax: Double = 60
     
     @Published var showWorkoutSheet = false
+    @Published var lift: LiftType = .squat
     
     func startWorkout(lift: LiftType) {
         self.showWorkoutSheet = true
@@ -27,7 +28,7 @@ class WorkoutViewModel: ObservableObject {
         let percentage = self.getMainSetPercentages().last ?? 0.5
         let reps = self.getReps().last ?? 5
         let unit = UserDefaults.standard.string(forKey: "unit") ?? "kg"
-        let weight = self.getWeight(lift: lift) ?? 100
+        let weight = self.getWeight(lift: lift)
         let liftWeight = (weight * (self.trainingMax / 100)) * percentage
         
         let prettyWeight = self.roundToNearest2dot5(number: liftWeight)
@@ -36,7 +37,57 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func getSets(lift: LiftType) -> [WorkoutSet] {
-        return []
+        let weight = self.getWeight(lift: lift)
+        var sets: [WorkoutSet] = []
+        
+        sets.append(contentsOf: self.getWarmupSets(lift: lift, weight: weight))
+        sets.append(contentsOf: self.getMainSets(lift: lift, weight: weight))
+        
+        return sets
+    }
+    
+    private func getWarmupSets(lift: LiftType, weight: Double) -> [WorkoutSet] {
+        var sets: [WorkoutSet] = []
+
+        for (index, percentage) in [0.4, 0.5, 0.6].enumerated() {
+            let liftWeight = (weight * (self.trainingMax / 100)) * percentage
+
+            sets.append(WorkoutSet(
+                id: UUID(),
+                setNum: index + 1,
+                liftType: lift,
+                liftName: lift.rawValue,
+                workoutSection: .warmup,
+                weight: roundToNearest2dot5(number: liftWeight),
+                reps: 5,
+                amrap: index == 2 ? 0 : nil
+            ))
+        }
+        
+        return sets
+    }
+    
+    private func getMainSets(lift: LiftType, weight: Double) -> [WorkoutSet] {
+        var sets: [WorkoutSet] = []
+        
+        let reps = self.getReps()
+        
+        for (index, percentage) in getMainSetPercentages().enumerated() {
+            let liftWeight = (weight * (self.trainingMax / 100)) * percentage
+            
+            sets.append(WorkoutSet(
+                id: UUID(), 
+                setNum: (index + 1) + 3,
+                liftType: lift,
+                liftName: lift.rawValue,
+                workoutSection: .main,
+                weight: roundToNearest2dot5(number: liftWeight),
+                reps: reps[index],
+                amrap: index == 2 ? 0 : nil
+            ))
+        }
+        
+        return sets
     }
     
     private func getMainSetPercentages() -> Array<Double> {
@@ -64,8 +115,8 @@ class WorkoutViewModel: ObservableObject {
             return [5,5,5]
         }
     }
-
-    func getWeight(lift: LiftType) -> Double? {
+    
+    func getWeight(lift: LiftType) -> Double {
         switch lift {
         case .squat:
             return self.squatMax
@@ -81,10 +132,10 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func getTrainingMax(lift: LiftType) -> Double {
-        let weight = self.getWeight(lift: lift) ?? 100
+        let weight = self.getWeight(lift: lift)
         let liftWeight = weight * (self.trainingMax / 100)
         let prettyWeight = self.roundToNearest2dot5(number: liftWeight)
-
+        
         return prettyWeight
         
     }

@@ -26,20 +26,24 @@ enum WorkoutSection: String, Codable {
 class WorkoutSet {
     @Attribute(.unique) var id: UUID
     
+    var setNum: Int
     var liftType: LiftType
     var liftName: String
     var workoutSection: WorkoutSection
     var weight: Double
     var reps: Int
-    var completedAt: Date
+    var completedAt: Date?
+    var amrap: Int?
     
-    init(id: UUID, liftType: LiftType, liftName: String, workoutSection: WorkoutSection, weight: Double, reps: Int, completedAt: Date) {
+    init(id: UUID, setNum: Int, liftType: LiftType, liftName: String, workoutSection: WorkoutSection, weight: Double, reps: Int, completedAt: Date? = nil, amrap: Int? = nil) {
         self.id = id
+        self.setNum = setNum
         self.liftType = liftType
         self.liftName = liftName
         self.workoutSection = workoutSection
         self.weight = weight
         self.reps = reps
         self.completedAt = completedAt
+        self.amrap = amrap
     }
 }

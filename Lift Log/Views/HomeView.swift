@@ -33,6 +33,7 @@ struct HomeView: View {
                 
                 ForEach(LiftType.allCases.filter({ $0 != .accessory }), id: \.rawValue) { lift in
                     Button {
+                        viewModel.lift = lift
                         viewModel.startWorkout(lift: lift)
                     } label: {
                         VStack(alignment: .leading) {
