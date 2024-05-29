@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C69EAFA02C0736C50086077A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69EAF9F2C0736C50086077A /* SettingsViewModel.swift */; };
+		C69EAFA22C0736DD0086077A /* LiftMaxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69EAFA12C0736DD0086077A /* LiftMaxes.swift */; };
+		C69EAFA42C0737650086077A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69EAFA32C0737650086077A /* SettingsView.swift */; };
 		D069499E2BF7335600F1BD89 /* WorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D069499D2BF7335600F1BD89 /* WorkoutViewModel.swift */; };
 		D06949A02BF7336B00F1BD89 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D069499F2BF7336A00F1BD89 /* HomeView.swift */; };
 		D06DA5C62BF6108D00DE2F6E /* Lift_LogApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06DA5C52BF6108D00DE2F6E /* Lift_LogApp.swift */; };
@@ -19,6 +22,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C69EAF9F2C0736C50086077A /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		C69EAFA12C0736DD0086077A /* LiftMaxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiftMaxes.swift; sourceTree = "<group>"; };
+		C69EAFA32C0737650086077A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		D069499D2BF7335600F1BD89 /* WorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewModel.swift; sourceTree = "<group>"; };
 		D069499F2BF7336A00F1BD89 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		D06DA5C22BF6108D00DE2F6E /* Lift Log.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Lift Log.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -85,6 +91,7 @@
 			children = (
 				D06DA5D42BF610BE00DE2F6E /* WorkoutView.swift */,
 				D069499F2BF7336A00F1BD89 /* HomeView.swift */,
+				C69EAFA32C0737650086077A /* SettingsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -94,6 +101,7 @@
 			children = (
 				D08ABE3C2BF68E5800A0873D /* Workout.swift */,
 				D08ABE3E2BF6A4D800A0873D /* WorkoutSet.swift */,
+				C69EAFA12C0736DD0086077A /* LiftMaxes.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -102,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				D069499D2BF7335600F1BD89 /* WorkoutViewModel.swift */,
+				C69EAF9F2C0736C50086077A /* SettingsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -181,8 +190,11 @@
 				D06DA5C82BF6108D00DE2F6E /* ContentView.swift in Sources */,
 				D06DA5D52BF610BE00DE2F6E /* WorkoutView.swift in Sources */,
 				D06DA5C62BF6108D00DE2F6E /* Lift_LogApp.swift in Sources */,
+				C69EAFA42C0737650086077A /* SettingsView.swift in Sources */,
 				D069499E2BF7335600F1BD89 /* WorkoutViewModel.swift in Sources */,
 				D08ABE3D2BF68E5800A0873D /* Workout.swift in Sources */,
+				C69EAFA02C0736C50086077A /* SettingsViewModel.swift in Sources */,
+				C69EAFA22C0736DD0086077A /* LiftMaxes.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

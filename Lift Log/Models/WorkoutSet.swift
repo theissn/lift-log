@@ -8,12 +8,12 @@
 import Foundation
 import SwiftData
 
-enum LiftType: String, Codable {
-    case squat
-    case ohp
-    case bench
-    case deadlift
-    case accessory
+enum LiftType: String, Codable, CaseIterable {
+    case squat = "Squat"
+    case ohp = "OHP"
+    case bench = "Bench"
+    case deadlift = "Deadlift"
+    case accessory = "Accessory"
 }
 
 enum WorkoutSection: String, Codable {

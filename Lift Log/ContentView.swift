@@ -14,6 +14,11 @@ struct ContentView: View {
                 .tabItem {
                     Image(systemName: "house")
                 }
+            
+            SettingsView()
+                .tabItem {
+                    Image(systemName: "gear")
+                }
         }
         .tint(.primary)
     }
