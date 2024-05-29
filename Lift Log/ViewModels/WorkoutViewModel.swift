@@ -17,6 +17,12 @@ class WorkoutViewModel: ObservableObject {
     @AppStorage("benchMax") var benchMax: Double = 80
     @AppStorage("ohpMax") var ohpMax: Double = 60
     
+    @Published var showWorkoutSheet = false
+    
+    func startWorkout(lift: LiftType) {
+        self.showWorkoutSheet = true
+    }
+    
     func getTopSet(lift: LiftType) -> String {
         let percentage = self.getMainSetPercentages().last ?? 0.5
         let reps = self.getReps().last ?? 5
@@ -59,7 +65,7 @@ class WorkoutViewModel: ObservableObject {
         }
     }
 
-    private func getWeight(lift: LiftType) -> Double? {
+    func getWeight(lift: LiftType) -> Double? {
         switch lift {
         case .squat:
             return self.squatMax
@@ -72,6 +78,15 @@ class WorkoutViewModel: ObservableObject {
         case .accessory:
             return 0
         }
+    }
+    
+    func getTrainingMax(lift: LiftType) -> Double {
+        let weight = self.getWeight(lift: lift) ?? 100
+        let liftWeight = weight * (self.trainingMax / 100)
+        let prettyWeight = self.roundToNearest2dot5(number: liftWeight)
+
+        return prettyWeight
+        
     }
     
     private func roundToNearest2dot5(number: Double) -> Double {

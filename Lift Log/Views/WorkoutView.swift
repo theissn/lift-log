@@ -12,6 +12,12 @@ struct WorkoutView: View {
     @State var currentWorkoutTime = "00:00"
     @State var timer: Timer?
     @State var isChecked = false
+    @State private var showingPopover = false
+    
+    @ObservedObject var viewModel: WorkoutViewModel
+
+    
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         NavigationStack {
@@ -31,15 +37,24 @@ struct WorkoutView: View {
                     .border(Color(.systemGray4).opacity(0.8))
                     
                     
-                    
                     VStack {
                         Text("Excercise")
                             .fontWeight(.bold)
                             .font(.system(size: 14, design: .monospaced))
                             .padding(.bottom, 8)
                         
-                        Text("Squat")
-                            .font(.system(size: 20, design: .monospaced))
+                        HStack {
+                            Text("Squat")
+                                .font(.system(size: 18, design: .monospaced))
+                            
+                            Button {
+                                self.showingPopover = true
+                            } label: {
+                                Image(systemName: "info.circle")
+                                    .imageScale(.small)
+                                    .foregroundColor(.primary)
+                            }
+                        }
                     }
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .padding()
@@ -59,67 +74,27 @@ struct WorkoutView: View {
                     .border(Color(.systemGray4).opacity(0.8))
                 }
                 .padding(.horizontal, 8)
+                .padding(.top)
                 
                 ScrollView {
                     VStack {
                         Divider()
                             .padding(.top)
                         
-                        ForEach(0..<50) { x in
-                            HStack {
-                                Button {
-                                    
-                                } label: {
-                                    Image(systemName: "slider.horizontal.2.square")
-                                        .font(.system(size: 18, weight: .regular, design: .monospaced))
-                                        .foregroundColor(.primary)
-                                }
-                                
-                                VStack(alignment: .leading) {
-                                    Text("Set \(x + 1)")
-                                        .font(.system(size: 16, design: .monospaced))
-                                        .fontWeight(.semibold)
-                                    
-                                    Text("\(x * 10)kg x 5")
-                                        .font(.system(size: 16, design: .monospaced))
-                                        .fontWeight(.semibold)
-                                }
-                                
-                                Spacer()
-                                
-                                Button(action: {
-                                    isChecked.toggle()
-                                }) {
-                                    HStack {
-                                        Image(systemName: isChecked ? "checkmark.square.fill" : "square")
-                                            .font(.system(size: 18, weight: .regular, design: .monospaced))
-                                            .foregroundColor(.primary)
-//
-//                                        Text("Checkbox")
-//                                            .font(.system(size: 18, weight: .regular, design: .monospaced))
-//                                            .foregroundColor(.primary)
-                                    }
-                                }
-                                .buttonStyle(PlainButtonStyle())
-
-                            }
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .padding(.horizontal)
-                            .padding(.vertical, 8)
-                            .onTapGesture {
-                                self.isChecked.toggle()
-                            }
-                            
-                            Divider()
-                        }
+                        WorkoutSetCell()
+                        WorkoutSetCell()
                     }
                     .frame(minWidth: 0, maxWidth: .infinity)
                 }
             }
+            .sheet(isPresented: self.$showingPopover, content: {
+                MaxesView(viewModel: self.viewModel)
+                    .padding()
+            })
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Cancel") {
-                        
+                        dismiss()
                     }
                     .foregroundStyle(.primary)
                 }
@@ -142,8 +117,6 @@ struct WorkoutView: View {
                 formatter.unitsStyle = .positional
                 formatter.zeroFormattingBehavior = .pad
                 
-                print(difference, startTime, now)
-                
                 if let formattedDifference = formatter.string(from: difference) {
                     currentWorkoutTime = formattedDifference
                 }
@@ -163,6 +136,58 @@ struct WorkoutView: View {
     }
 }
 
+struct WorkoutSetCell: View {
+    @State var isChecked = false
+    @State var showEditSheet = false
+    
+    var body: some View {
+        VStack {
+            HStack {
+                Button {
+                    showEditSheet = true
+                } label: {
+                    Image(systemName: "square.and.pencil")
+                        .font(.system(size: 18, weight: .regular, design: .monospaced))
+                        .foregroundColor(.primary)
+                }
+                
+                Button {
+                    isChecked.toggle()
+                } label: {
+                    VStack(alignment: .leading) {
+                        Text("Set 1")
+                            .font(.system(size: 16, design: .monospaced))
+                            .fontWeight(.semibold)
+                        
+                        Text("100 kg x 5")
+                            .font(.system(size: 16, design: .monospaced))
+                            .fontWeight(.semibold)
+                    }
+                    
+                    Spacer()
+                    
+                    HStack {
+                        Image(systemName: isChecked ? "checkmark.square.fill" : "square")
+                            .font(.system(size: 18, weight: .regular, design: .monospaced))
+                            .foregroundColor(.primary)
+                    }
+                }
+                .foregroundStyle(.primary)
+
+            }
+        }
+        .sheet(isPresented: $showEditSheet) {
+            EmptyView()
+        }
+        .frame(minWidth: 0, maxWidth: .infinity)
+        .padding(.horizontal)
+        .padding(.vertical, 8)
+        .onTapGesture {
+            self.isChecked.toggle()
+        }
+    }
+}
+
 #Preview {
-    WorkoutView()
+    WorkoutView(viewModel: WorkoutViewModel())
 }

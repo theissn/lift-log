@@ -32,30 +32,37 @@ struct HomeView: View {
                 .padding(.bottom)
                 
                 ForEach(LiftType.allCases.filter({ $0 != .accessory }), id: \.rawValue) { lift in
-                    VStack(alignment: .leading) {
-                        HStack {
-                            VStack(alignment: .leading) {
-                                Text("\(lift.rawValue)")
-                                    .font(.system(size: 16, design: .monospaced))
-                            }
-                            
-                            Spacer()
-                            
-                            VStack {
-                                Text(viewModel.getTopSet(lift: lift))
-                                    .font(.system(size: 14, design: .monospaced))
+                    Button {
+                        viewModel.startWorkout(lift: lift)
+                    } label: {
+                        VStack(alignment: .leading) {
+                            HStack {
+                                VStack(alignment: .leading) {
+                                    Text("\(lift.rawValue)")
+                                        .font(.system(size: 16, design: .monospaced))
+                                }
+                                
+                                Spacer()
+                                
+                                VStack {
+                                    Text(viewModel.getTopSet(lift: lift))
+                                        .font(.system(size: 14, design: .monospaced))
+                                }
                             }
                         }
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color(.systemGray4))
+                        .cornerRadius(12)
                     }
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color(.systemGray4))
-                    .cornerRadius(12)
                 }
                 .padding(.horizontal)
                 .padding(.vertical, 4)
                 
                 Spacer()
+            }
+            .sheet(isPresented: $viewModel.showWorkoutSheet) {
+                WorkoutView(viewModel: self.viewModel)
             }
             .onAppear {
             }
