@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C69D25422C08556500023131 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69D25412C08556500023131 /* Formatter.swift */; };
+		C69D25452C08563F00023131 /* WorkoutSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69D25442C08563F00023131 /* WorkoutSetCell.swift */; };
 		C69EAFA02C0736C50086077A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69EAF9F2C0736C50086077A /* SettingsViewModel.swift */; };
 		C69EAFA22C0736DD0086077A /* LiftMaxes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69EAFA12C0736DD0086077A /* LiftMaxes.swift */; };
 		C69EAFA42C0737650086077A /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69EAFA32C0737650086077A /* SettingsView.swift */; };
@@ -23,6 +25,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C69D253F2C07C4A900023131 /* Lift-Log-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Lift-Log-Info.plist"; sourceTree = SOURCE_ROOT; };
+		C69D25412C08556500023131 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
+		C69D25442C08563F00023131 /* WorkoutSetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSetCell.swift; sourceTree = "<group>"; };
 		C69EAF9F2C0736C50086077A /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		C69EAFA12C0736DD0086077A /* LiftMaxes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiftMaxes.swift; sourceTree = "<group>"; };
 		C69EAFA32C0737650086077A /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
@@ -50,6 +55,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		C69D25402C08555D00023131 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				C69D25412C08556500023131 /* Formatter.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		C69D25432C08563200023131 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				C69D25442C08563F00023131 /* WorkoutSetCell.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		D06DA5B92BF6108C00DE2F6E = {
 			isa = PBXGroup;
 			children = (
@@ -69,6 +90,9 @@
 		D06DA5C42BF6108D00DE2F6E /* Lift Log */ = {
 			isa = PBXGroup;
 			children = (
+				C69D25432C08563200023131 /* Components */,
+				C69D25402C08555D00023131 /* Helpers */,
+				C69D253F2C07C4A900023131 /* Lift-Log-Info.plist */,
 				D08ABE402BF6A5A100A0873D /* ViewModels */,
 				D08ABE3B2BF68E4C00A0873D /* Models */,
 				D06DA5D32BF610AA00DE2F6E /* Views */,
@@ -194,7 +218,9 @@
 				D06DA5D52BF610BE00DE2F6E /* WorkoutView.swift in Sources */,
 				D06DA5C62BF6108D00DE2F6E /* Lift_LogApp.swift in Sources */,
 				C69EAFA42C0737650086077A /* SettingsView.swift in Sources */,
+				C69D25422C08556500023131 /* Formatter.swift in Sources */,
 				D069499E2BF7335600F1BD89 /* WorkoutViewModel.swift in Sources */,
+				C69D25452C08563F00023131 /* WorkoutSetCell.swift in Sources */,
 				D08ABE3D2BF68E5800A0873D /* Workout.swift in Sources */,
 				C69EAFA02C0736C50086077A /* SettingsViewModel.swift in Sources */,
 				C69EAFA22C0736DD0086077A /* LiftMaxes.swift in Sources */,
@@ -335,6 +361,7 @@
 				DEVELOPMENT_TEAM = YSEVN62DRH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Lift-Log-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -364,6 +391,7 @@
 				DEVELOPMENT_TEAM = YSEVN62DRH;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Lift-Log-Info.plist";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

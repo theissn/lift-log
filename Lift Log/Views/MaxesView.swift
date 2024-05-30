@@ -46,7 +46,7 @@ struct MaxesView: View {
                                         .font(.system(size: 14, design: .monospaced))
                                     
                                     Text(String(format: "%.2f", viewModel.getWeight(lift: lift)))
-                                        .font(.system(size: 18, design: .monospaced))
+                                        .font(.system(size: 16, design: .monospaced))
                                 }
                                 
                                 VStack {
@@ -54,7 +54,7 @@ struct MaxesView: View {
                                         .font(.system(size: 14, design: .monospaced))
                                     
                                     Text(String(format: "%.2f", viewModel.getTrainingMax(lift: lift)))
-                                        .font(.system(size: 18, design: .monospaced))
+                                        .font(.system(size: 16, design: .monospaced))
                                 }
                                 
                             }

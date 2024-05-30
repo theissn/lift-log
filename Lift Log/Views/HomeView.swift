@@ -14,9 +14,12 @@ struct HomeView: View {
         NavigationStack {
             VStack(alignment: .leading) {
                 Text("Lift Log")
+                    .foregroundStyle(.primaryBrand)
                     .font(.system(size: 26, design: .monospaced))
+                    .fontWeight(.black)
                     .padding(.horizontal)
                     .padding(.bottom, 16)
+                    .padding(.top, 16)
                 
                 Text("Week")
                     .font(.system(size: 18, design: .monospaced))
@@ -64,8 +67,7 @@ struct HomeView: View {
             }
             .sheet(isPresented: $viewModel.showWorkoutSheet) {
                 WorkoutView(viewModel: self.viewModel)
-            }
-            .onAppear {
+                    .interactiveDismissDisabled()
             }
         }
     }

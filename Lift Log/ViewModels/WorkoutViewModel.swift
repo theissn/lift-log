@@ -31,9 +31,9 @@ class WorkoutViewModel: ObservableObject {
         let weight = self.getWeight(lift: lift)
         let liftWeight = (weight * (self.trainingMax / 100)) * percentage
         
-        let prettyWeight = self.roundToNearest2dot5(number: liftWeight)
+        let prettyWeight = Formatter.roundToNearest2dot5(number: liftWeight)
         
-        return "\(prettyWeight) \(unit) @ \(reps)+"
+        return "\(reps)+ @ \(prettyWeight) \(unit)"
     }
     
     func getSets(lift: LiftType) -> [WorkoutSet] {
@@ -58,9 +58,8 @@ class WorkoutViewModel: ObservableObject {
                 liftType: lift,
                 liftName: lift.rawValue,
                 workoutSection: .warmup,
-                weight: roundToNearest2dot5(number: liftWeight),
-                reps: 5,
-                amrap: index == 2 ? 0 : nil
+                weight: Formatter.roundToNearest2dot5(number: liftWeight),
+                reps: 5
             ))
         }
         
@@ -81,7 +80,7 @@ class WorkoutViewModel: ObservableObject {
                 liftType: lift,
                 liftName: lift.rawValue,
                 workoutSection: .main,
-                weight: roundToNearest2dot5(number: liftWeight),
+                weight: Formatter.roundToNearest2dot5(number: liftWeight),
                 reps: reps[index],
                 amrap: index == 2 ? 0 : nil
             ))
@@ -134,15 +133,9 @@ class WorkoutViewModel: ObservableObject {
     func getTrainingMax(lift: LiftType) -> Double {
         let weight = self.getWeight(lift: lift)
         let liftWeight = weight * (self.trainingMax / 100)
-        let prettyWeight = self.roundToNearest2dot5(number: liftWeight)
+        let prettyWeight = Formatter.roundToNearest2dot5(number: liftWeight)
         
         return prettyWeight
         
-    }
-    
-    private func roundToNearest2dot5(number: Double) -> Double {
-        let scaled = ceil(number / 2.5)
-        let rounded = scaled.rounded() // Use standard rounding
-        return rounded * 2.5
     }
 }

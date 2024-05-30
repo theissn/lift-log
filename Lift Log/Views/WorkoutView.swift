@@ -10,7 +10,10 @@ import SwiftUI
 struct WorkoutView: View {
     @State var startTime = Date()
     @State var currentWorkoutTime = "00:00"
+    @State var currentRestTime = "00:00"
+    @State var currentSetEndedAt: Date?
     @State var timer: Timer?
+    @State var restTimer: Timer?
     @State var isChecked = false
     @State private var showingPopover = false
     
@@ -19,6 +22,8 @@ struct WorkoutView: View {
     @State var sets: [WorkoutSet] = []
     
     @Environment(\.dismiss) var dismiss
+    
+    @State var showCancelAlert = false
     
     var body: some View {
         NavigationStack {
@@ -36,6 +41,33 @@ struct WorkoutView: View {
                             
                             Text("\(currentWorkoutTime)")
                                 .font(.system(size: 20, design: .monospaced))
+                        }
+                        .frame(minWidth: 0, maxWidth: .infinity)
+                        .padding()
+                        .border(Color(.systemGray4).opacity(0.8))
+                        
+                        VStack {
+                            Text("Rest")
+                                .fontWeight(.bold)
+                                .font(.system(size: 14, design: .monospaced))
+                                .padding(.bottom, 8)
+                            
+                            HStack {
+                                Text("\(currentRestTime)")
+                                    .font(.system(size: 20, design: .monospaced))
+                                
+                                if let _ = currentSetEndedAt {
+                                    Button {
+                                        self.stopRestTimer()
+                                    } label: {
+                                        Image(systemName: "xmark.circle")
+                                            .imageScale(.small)
+                                            .foregroundColor(.primary)
+                                    }
+                                    
+                                }
+                            }
+                            
                         }
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .padding()
@@ -77,19 +109,6 @@ struct WorkoutView: View {
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .padding()
                         .border(Color(.systemGray4).opacity(0.8))
-                        
-                        VStack {
-                            Text("Max")
-                                .fontWeight(.bold)
-                                .font(.system(size: 14, design: .monospaced))
-                                .padding(.bottom, 8)
-                            
-                            Text("XXX kg")
-                                .font(.system(size: 20, design: .monospaced))
-                        }
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .padding()
-                        .border(Color(.systemGray4).opacity(0.8))
                     }
                     .padding(.horizontal, 8)
                     .padding(.top)
@@ -98,8 +117,49 @@ struct WorkoutView: View {
                         Divider()
                             .padding(.top)
                         
-                        ForEach(sets) { set in
-                            WorkoutSetCell(set: set)
+                        HStack {
+                            Text("WARM-UP")
+                                .fontWeight(.bold)
+                                .font(.system(size: 14, design: .monospaced))
+                                .padding(.vertical, 8)
+                            
+                            Spacer()
+                        }
+                        .padding(.horizontal)
+
+                        
+                        ForEach(sets.filter({ $0.workoutSection == .warmup })) { set in
+                            WorkoutSetCell(
+                                set: set,
+                                updateSet: {
+                                    updateSet($0)
+                                }, 
+                                startRestTimer: self.startRestTimer
+                            )
+                            
+                            Divider()
+                        }
+                        
+                        HStack {
+                            Text("MAIN")
+                                .fontWeight(.bold)
+                                .font(.system(size: 14, design: .monospaced))
+                                .padding(.vertical, 8)
+                            
+                            Spacer()
+                        }
+                        .padding(.horizontal)
+                        
+                        ForEach(sets.filter({ $0.workoutSection == .main })) { set in
+                            WorkoutSetCell(
+                                set: set,
+                                updateSet: {
+                                    updateSet($0)
+                                },
+                                startRestTimer: self.startRestTimer
+                            )
+                            
+                            Divider()
                         }
                         
 //                        Button {
@@ -123,14 +183,24 @@ struct WorkoutView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button("Cancel") {
-                        dismiss()
+                        self.showCancelAlert = true
                     }
                     .foregroundStyle(.primary)
+                    .alert("Delete Workout?", isPresented: $showCancelAlert, actions: {
+                        Button(role: .destructive) {
+                            dismiss()
+                        } label: {
+                            Text("Delete")
+                        }
+                        
+                    })
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Complete") {
-                        
+                        for set in sets {
+                            print(set.id, set.completedAt, set.reps, set.setNum)
+                        }
                     }
                     .foregroundStyle(.primary)
                 }
@@ -156,6 +226,44 @@ struct WorkoutView: View {
         }
         .onDisappear {
             self.timer?.invalidate()
+            self.restTimer?.invalidate()
+        }
+    }
+    
+    private func startRestTimer() {
+        self.stopRestTimer()
+        
+        currentSetEndedAt = Date()
+        guard let restStart = currentSetEndedAt else { return }
+        
+        self.restTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            let now = Date()
+            let difference = Calendar.current.dateComponents([.minute, .second], from: restStart, to: now)
+            
+            let formatter = DateComponentsFormatter()
+            formatter.allowedUnits = [.minute, .second]
+            formatter.unitsStyle = .positional
+            formatter.zeroFormattingBehavior = .pad
+            
+            if let formattedDifference = formatter.string(from: difference) {
+                currentRestTime = formattedDifference
+            }
+        }
+    }
+    
+    private func stopRestTimer() {
+        currentRestTime = "00:00"
+        currentSetEndedAt = nil
+        restTimer?.invalidate()
+    }
+    
+    private func updateSet(_ set: WorkoutSet) {
+        if let index = sets.firstIndex(where: { $0.id == set.id }) {
+            sets[index] = set
+        }
+        
+        if set.completedAt == nil {
+            self.stopRestTimer()
         }
     }
     
@@ -164,72 +272,6 @@ struct WorkoutView: View {
         dateFormatter.dateFormat = "HH:mm"
         
         return dateFormatter.string(from: self.startTime)
-    }
-}
-
-struct WorkoutSetCell: View {
-    @State var isChecked = false
-    @State var showEditSheet = false
-    
-    @State var set: WorkoutSet
-    
-    var body: some View {
-        VStack {
-            HStack {
-                Button {
-                    showEditSheet = true
-                } label: {
-                    Image(systemName: "square.and.pencil")
-                        .font(.system(size: 18, weight: .regular, design: .monospaced))
-                        .foregroundColor(.primary)
-                }
-                .padding(.trailing, 8)
-                
-                Button {
-                    isChecked.toggle()
-                } label: {
-                    VStack(alignment: .leading) {
-                        Text("Set \(set.setNum)")
-                            .font(.system(size: 16, design: .monospaced))
-                            .fontWeight(.semibold)
-                        
-                        
-                        Text(getPrettyWeight())
-                            .font(.system(size: 16, design: .monospaced))
-                            .fontWeight(.semibold)
-                            .padding(.top, 4)
-                    }
-                    
-                    Spacer()
-                    
-                    HStack {
-                        Image(systemName: isChecked ? "checkmark.square.fill" : "square")
-                            .font(.system(size: 18, weight: .regular, design: .monospaced))
-                            .foregroundColor(.primary)
-                    }
-                }
-                .foregroundStyle(.primary)
-                
-            }
-        }
-        .sheet(isPresented: $showEditSheet) {
-            EmptyView()
-        }
-        .frame(minWidth: 0, maxWidth: .infinity)
-        .padding(.horizontal)
-        .padding(.vertical, 8)
-        .onTapGesture {
-            self.isChecked.toggle()
-        }
-    }
-    
-    private func getPrettyWeight() -> String {
-        let unit = UserDefaults.standard.string(forKey: "unit") ?? "kg"
-        
-        let plus = set.amrap == nil ? "" : "+"
-        
-        return "\(set.weight)\(unit) @ \(set.reps)\(plus)"
-        
     }
 }
 
