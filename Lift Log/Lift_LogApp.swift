@@ -13,7 +13,7 @@ struct Lift_LogApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .modelContainer(for: [Workout.self, WorkoutSet.self])
+                .modelContainer(for: [Workout.self, WorkoutSet.self, Lift.self])
         }
     }
 }

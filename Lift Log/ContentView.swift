@@ -13,13 +13,16 @@ struct ContentView: View {
             HomeView()
                 .tabItem {
                     Image(systemName: "house")
-                        .tint(.primaryBrand)
+                }
+            
+            WorkoutHistoryView()
+                .tabItem {
+                    Image(systemName: "clock")
                 }
             
             SettingsView()
                 .tabItem {
                     Image(systemName: "gear")
-                        .tint(.primaryBrand)
                 }
         }
         .tint(.primaryBrand)

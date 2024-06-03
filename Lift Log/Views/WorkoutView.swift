@@ -10,6 +10,7 @@ import SwiftData
 
 struct WorkoutView: View {
     @Environment(\.dismiss) var dismiss
+    @Environment(\.modelContext) var context
     
     @State var sets: [WorkoutSet] = []
     @State var startTime = Date()
@@ -24,8 +25,13 @@ struct WorkoutView: View {
     @State var showCompleteAlert = false
     @State var showAddSetSheet = false
     
+    var hasAssistanceSets: Bool {
+        return sets.filter({ $0.workoutSection == .assistance }).isEmpty == false
+    }
     
     @ObservedObject var viewModel: WorkoutViewModel
+    
+    var workout: Workout?
     
     var body: some View {
         NavigationStack {
@@ -136,7 +142,8 @@ struct WorkoutView: View {
                                 updateSet: {
                                     updateSet($0)
                                 },
-                                startRestTimer: self.startRestTimer
+                                startRestTimer: self.startRestTimer,
+                                canUpdate: self.workout == nil
                             )
                             
                             Divider()
@@ -158,30 +165,55 @@ struct WorkoutView: View {
                                 updateSet: {
                                     updateSet($0)
                                 },
-                                startRestTimer: self.startRestTimer
+                                startRestTimer: self.startRestTimer,
+                                canUpdate: self.workout == nil
                             )
                             
                             Divider()
                         }
                         
-                        Button {
-                            self.showAddSetSheet.toggle()
-                        } label: {
+                        if hasAssistanceSets {
                             HStack {
-                                Image(systemName: "plus.app")
-                                Text("Add Set")
+                                Text("ASSISTANCE")
+                                    .fontWeight(.bold)
+                                    .font(.system(size: 14, design: .monospaced))
+                                    .padding(.vertical, 8)
+                                
+                                Spacer()
                             }
-                            .foregroundColor(.primary)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color(.systemGray6))
+                            .padding(.horizontal)
                         }
-                        .padding()
-                        .sheet(isPresented: $showAddSetSheet) {
-                            VStack {
-                                Form {
-                                    
+                        
+                        ForEach(sets.filter({ $0.workoutSection == .assistance })) { set in
+                            WorkoutSetCell(
+                                set: set,
+                                updateSet: {
+                                    updateSet($0)
+                                },
+                                startRestTimer: self.startRestTimer,
+                                showLiftName: true,
+                                canUpdate: self.workout == nil
+                            )
+                            
+                            Divider()
+                        }
+                        
+                        if self.workout == nil {
+                            Button {
+                                self.showAddSetSheet.toggle()
+                            } label: {
+                                HStack {
+                                    Image(systemName: "plus.app")
+                                    Text("Add Set")
                                 }
+                                .foregroundColor(.primary)
+                                .frame(maxWidth: .infinity)
+                                .padding()
+                                .background(Color(.systemGray6))
+                            }
+                            .padding()
+                            .sheet(isPresented: $showAddSetSheet) {
+                                AddSetView(setNumber: self.sets.count + 1, tmax: viewModel.getTrainingMax(lift: self.viewModel.lift), addLift: { self.sets.append($0) })
                             }
                         }
                     }
@@ -191,62 +223,74 @@ struct WorkoutView: View {
                 MaxesView(viewModel: self.viewModel)
             })
             .toolbar {
-                ToolbarItem(placement: .topBarLeading) {
-                    Button("Cancel") {
-                        self.showCancelAlert = true
-                    }
-                    .foregroundStyle(.primary)
-                    .alert("Delete Workout?", isPresented: $showCancelAlert) {
-                        Button(role: .destructive) {
-                            dismiss()
-                        } label: {
-                            Text("Delete")
+                if workout == nil {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button("Cancel") {
+                            self.showCancelAlert = true
                         }
-                    }
-                }
-                
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("Complete") {
-                        self.showCompleteAlert = true
-                    }
-                    .foregroundStyle(.primaryBrand)
-                    .alert("Save Workout?", isPresented: $showCompleteAlert) {
-                        Button(role: .cancel) {
-                            self.showCompleteAlert.toggle()
-                        } label: {
-                            Text("Cancel")
-                                
-                        }
-                        .foregroundColor(.primary)
-                        
-                        Button {
-                            for set in sets {
-                                print(set.id, set.completedAt, set.reps, set.setNum, set.percentage)
+                        .foregroundStyle(.primary)
+                        .alert("Delete Workout?", isPresented: $showCancelAlert) {
+                            Button(role: .destructive) {
+                                dismiss()
+                            } label: {
+                                Text("Delete")
                             }
+                        }
+                    }
+                    
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button("Complete") {
+                            self.showCompleteAlert = true
+                        }
+                        .foregroundStyle(.primaryBrand)
+                        .alert("Save Workout?", isPresented: $showCompleteAlert) {
+                            Button(role: .cancel) {
+                                self.showCompleteAlert.toggle()
+                            } label: {
+                                Text("Cancel")
+                                
+                            }
+                            .foregroundColor(.primary)
                             
-                            dismiss()
-                        } label: {
-                            Text("Save")
-                                .foregroundColor(.primaryBrand)
+                            Button {
+                                for set in sets {
+                                    print(set.id, set.completedAt, set.reps, set.setNum, set.percentage)
+                                }
+                                
+                                let workout = Workout(
+                                    id: UUID(),
+                                    startTime: self.startTime,
+                                    endTime: Date(),
+                                    liftType: self.viewModel.lift,
+                                    workoutSets: self.sets
+                                )
+                                
+                                print(workout)
+                                
+                                context.insert(workout)
+                                
+                                dismiss()
+                            } label: {
+                                Text("Save")
+                                    .foregroundColor(.primaryBrand)
+                            }
                         }
                     }
                 }
             }
         }
         .onAppear {
+            if let workout = self.workout {
+                self.sets = workout.workoutSets
+                self.startTime = workout.startTime
+                
+                calcWorkoutDuration()
+                
+                return
+            }
+            
             self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-                let now = Date()
-                let difference = Calendar.current.dateComponents([.hour, .minute], from: startTime, to: now)
-                
-                let formatter = DateComponentsFormatter()
-                formatter.allowedUnits = [.hour, .minute]
-                formatter.unitsStyle = .positional
-                formatter.zeroFormattingBehavior = .pad
-                
-                if let formattedDifference = formatter.string(from: difference) {
-                    currentWorkoutTime = formattedDifference
-                }
-                
+                calcWorkoutDuration()
             }
             
             self.sets = viewModel.getSets(lift: self.viewModel.lift)
@@ -255,6 +299,21 @@ struct WorkoutView: View {
             self.timer?.invalidate()
             self.restTimer?.invalidate()
         }
+    }
+    
+    private func calcWorkoutDuration() {
+        let now = Date()
+        let difference = Calendar.current.dateComponents([.hour, .minute], from: startTime, to: now)
+        
+        let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute]
+        formatter.unitsStyle = .positional
+        formatter.zeroFormattingBehavior = .pad
+        
+        if let formattedDifference = formatter.string(from: difference) {
+            currentWorkoutTime = formattedDifference
+        }
+        
     }
     
     private func startRestTimer() {

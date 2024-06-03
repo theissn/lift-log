@@ -17,6 +17,8 @@ struct WorkoutSetCell: View {
     
     var updateSet: (_ set: WorkoutSet) -> Void
     var startRestTimer: () -> Void
+    var showLiftName: Bool = false
+    var canUpdate: Bool = true
     
     var body: some View {
         VStack {
@@ -27,11 +29,15 @@ struct WorkoutSetCell: View {
                     Image(systemName: "square.and.pencil")
                         .font(.system(size: 18, weight: .regular, design: .monospaced))
                         .foregroundColor(.primary)
+                        .opacity(canUpdate ? 1 : 0.5)
                 }
                 .padding(.trailing, 8)
+                .disabled(!canUpdate)
                 
                 Button {
-                    print(set.setNum)
+                    if !canUpdate {
+                        return
+                    }
                     
                     if set.completedAt != nil {
                         set.completedAt = nil
@@ -47,9 +53,17 @@ struct WorkoutSetCell: View {
                     self.updateSetAttr()
                 } label: {
                     VStack(alignment: .leading) {
+                        HStack(spacing: 0) {
                             Text("Set \(set.setNum)")
                                 .font(.system(size: 16, design: .monospaced))
                                 .fontWeight(.semibold)
+                            
+                            if self.showLiftName {
+                                Text(" - \(set.liftName)")
+                                    .font(.system(size: 16, design: .monospaced))
+                                    .fontWeight(.semibold)
+                            }
+                        }
                         
                         HStack(spacing: 4) {
                             Text(getPrettyWeight(reps: set.reps))
@@ -75,6 +89,8 @@ struct WorkoutSetCell: View {
                     }
                 }
                 .foregroundStyle(.primary)
+                .opacity(canUpdate ? 1 : 0.5)
+                .disabled(!canUpdate)
                 
             }
         }
