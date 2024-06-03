@@ -34,8 +34,9 @@ class WorkoutSet {
     var reps: Int
     var completedAt: Date?
     var amrap: Int?
+    var percentage: Double?
     
-    init(id: UUID, setNum: Int, liftType: LiftType, liftName: String, workoutSection: WorkoutSection, weight: Double, reps: Int, completedAt: Date? = nil, amrap: Int? = nil) {
+    init(id: UUID, setNum: Int, liftType: LiftType, liftName: String, workoutSection: WorkoutSection, weight: Double, reps: Int, completedAt: Date? = nil, amrap: Int? = nil, percentage: Double? = nil) {
         self.id = id
         self.setNum = setNum
         self.liftType = liftType
@@ -45,5 +46,6 @@ class WorkoutSet {
         self.reps = reps
         self.completedAt = completedAt
         self.amrap = amrap
+        self.percentage = percentage
     }
 }

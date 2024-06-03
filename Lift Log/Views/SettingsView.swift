@@ -19,7 +19,7 @@ struct SettingsView: View {
         NavigationStack {
             VStack {
                 Form {
-                    Section(header: Text("Maxes")) {
+                    Section(header: Text("Lifts")) {
                         HStack {
                             Text("Squat")
                             
@@ -95,7 +95,7 @@ struct SettingsView: View {
                     Button("Save") {
                         self.isFocused = false
                     }
-                        .foregroundStyle(.primary)
+                    .foregroundStyle(.primaryBrand)
                 }
             }
         }

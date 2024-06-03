@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C60D7DF92C0DB5AC009F7577 /* AddSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D7DF82C0DB5AC009F7577 /* AddSetView.swift */; };
 		C69D25422C08556500023131 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69D25412C08556500023131 /* Formatter.swift */; };
 		C69D25452C08563F00023131 /* WorkoutSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69D25442C08563F00023131 /* WorkoutSetCell.swift */; };
 		C69EAFA02C0736C50086077A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69EAF9F2C0736C50086077A /* SettingsViewModel.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C60D7DF82C0DB5AC009F7577 /* AddSetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSetView.swift; sourceTree = "<group>"; };
 		C69D253F2C07C4A900023131 /* Lift-Log-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Lift-Log-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C69D25412C08556500023131 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		C69D25442C08563F00023131 /* WorkoutSetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSetCell.swift; sourceTree = "<group>"; };
@@ -119,6 +121,7 @@
 				D069499F2BF7336A00F1BD89 /* HomeView.swift */,
 				C69EAFA32C0737650086077A /* SettingsView.swift */,
 				C69EAFA52C077DBE0086077A /* MaxesView.swift */,
+				C60D7DF82C0DB5AC009F7577 /* AddSetView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -221,6 +224,7 @@
 				C69D25422C08556500023131 /* Formatter.swift in Sources */,
 				D069499E2BF7335600F1BD89 /* WorkoutViewModel.swift in Sources */,
 				C69D25452C08563F00023131 /* WorkoutSetCell.swift in Sources */,
+				C60D7DF92C0DB5AC009F7577 /* AddSetView.swift in Sources */,
 				D08ABE3D2BF68E5800A0873D /* Workout.swift in Sources */,
 				C69EAFA02C0736C50086077A /* SettingsViewModel.swift in Sources */,
 				C69EAFA22C0736DD0086077A /* LiftMaxes.swift in Sources */,

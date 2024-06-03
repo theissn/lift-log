@@ -6,8 +6,12 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct WorkoutView: View {
+    @Environment(\.dismiss) var dismiss
+    
+    @State var sets: [WorkoutSet] = []
     @State var startTime = Date()
     @State var currentWorkoutTime = "00:00"
     @State var currentRestTime = "00:00"
@@ -16,14 +20,12 @@ struct WorkoutView: View {
     @State var restTimer: Timer?
     @State var isChecked = false
     @State private var showingPopover = false
+    @State var showCancelAlert = false
+    @State var showCompleteAlert = false
+    @State var showAddSetSheet = false
+    
     
     @ObservedObject var viewModel: WorkoutViewModel
-    
-    @State var sets: [WorkoutSet] = []
-    
-    @Environment(\.dismiss) var dismiss
-    
-    @State var showCancelAlert = false
     
     var body: some View {
         NavigationStack {
@@ -126,14 +128,14 @@ struct WorkoutView: View {
                             Spacer()
                         }
                         .padding(.horizontal)
-
+                        
                         
                         ForEach(sets.filter({ $0.workoutSection == .warmup })) { set in
                             WorkoutSetCell(
                                 set: set,
                                 updateSet: {
                                     updateSet($0)
-                                }, 
+                                },
                                 startRestTimer: self.startRestTimer
                             )
                             
@@ -162,23 +164,31 @@ struct WorkoutView: View {
                             Divider()
                         }
                         
-//                        Button {
-//                        } label: {
-//                            HStack {
-//                                Image(systemName: "plus.app")
-//                                Text("Add Set")
-//                            }
-//                            .frame(maxWidth: .infinity)
-//                            .padding()
-//                            .background(Color(.systemGray4))
-//                        }
-//                        .padding()
+                        Button {
+                            self.showAddSetSheet.toggle()
+                        } label: {
+                            HStack {
+                                Image(systemName: "plus.app")
+                                Text("Add Set")
+                            }
+                            .foregroundColor(.primary)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color(.systemGray6))
+                        }
+                        .padding()
+                        .sheet(isPresented: $showAddSetSheet) {
+                            VStack {
+                                Form {
+                                    
+                                }
+                            }
+                        }
                     }
                 }
             }
             .sheet(isPresented: self.$showingPopover, content: {
                 MaxesView(viewModel: self.viewModel)
-                //                    .padding()
             })
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -186,23 +196,40 @@ struct WorkoutView: View {
                         self.showCancelAlert = true
                     }
                     .foregroundStyle(.primary)
-                    .alert("Delete Workout?", isPresented: $showCancelAlert, actions: {
+                    .alert("Delete Workout?", isPresented: $showCancelAlert) {
                         Button(role: .destructive) {
                             dismiss()
                         } label: {
                             Text("Delete")
                         }
-                        
-                    })
+                    }
                 }
                 
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("Complete") {
-                        for set in sets {
-                            print(set.id, set.completedAt, set.reps, set.setNum)
+                        self.showCompleteAlert = true
+                    }
+                    .foregroundStyle(.primaryBrand)
+                    .alert("Save Workout?", isPresented: $showCompleteAlert) {
+                        Button(role: .cancel) {
+                            self.showCompleteAlert.toggle()
+                        } label: {
+                            Text("Cancel")
+                                
+                        }
+                        .foregroundColor(.primary)
+                        
+                        Button {
+                            for set in sets {
+                                print(set.id, set.completedAt, set.reps, set.setNum, set.percentage)
+                            }
+                            
+                            dismiss()
+                        } label: {
+                            Text("Save")
+                                .foregroundColor(.primaryBrand)
                         }
                     }
-                    .foregroundStyle(.primary)
                 }
             }
         }
@@ -277,4 +304,5 @@ struct WorkoutView: View {
 
 #Preview {
     WorkoutView(viewModel: WorkoutViewModel())
+        .modelContainer(for: [Workout.self, WorkoutSet.self])
 }

@@ -13,14 +13,16 @@ struct ContentView: View {
             HomeView()
                 .tabItem {
                     Image(systemName: "house")
+                        .tint(.primaryBrand)
                 }
             
             SettingsView()
                 .tabItem {
                     Image(systemName: "gear")
+                        .tint(.primaryBrand)
                 }
         }
-        .tint(.primary)
+        .tint(.primaryBrand)
     }
 }
 

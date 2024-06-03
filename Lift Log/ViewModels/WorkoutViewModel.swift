@@ -59,7 +59,8 @@ class WorkoutViewModel: ObservableObject {
                 liftName: lift.rawValue,
                 workoutSection: .warmup,
                 weight: Formatter.roundToNearest2dot5(number: liftWeight),
-                reps: 5
+                reps: 5,
+                percentage: percentage
             ))
         }
         
@@ -82,7 +83,8 @@ class WorkoutViewModel: ObservableObject {
                 workoutSection: .main,
                 weight: Formatter.roundToNearest2dot5(number: liftWeight),
                 reps: reps[index],
-                amrap: index == 2 ? 0 : nil
+                amrap: index == 2 ? 0 : nil,
+                percentage: percentage
             ))
         }
         

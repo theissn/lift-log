@@ -21,14 +21,14 @@ struct WorkoutSetCell: View {
     var body: some View {
         VStack {
             HStack {
-                //                Button {
-                //                    showEditSheet = true
-                //                } label: {
-                //                    Image(systemName: "square.and.pencil")
-                //                        .font(.system(size: 18, weight: .regular, design: .monospaced))
-                //                        .foregroundColor(.primary)
-                //                }
-                //                .padding(.trailing, 8)
+                Button {
+                    showEditSheet = true
+                } label: {
+                    Image(systemName: "square.and.pencil")
+                        .font(.system(size: 18, weight: .regular, design: .monospaced))
+                        .foregroundColor(.primary)
+                }
+                .padding(.trailing, 8)
                 
                 Button {
                     print(set.setNum)
@@ -47,15 +47,23 @@ struct WorkoutSetCell: View {
                     self.updateSetAttr()
                 } label: {
                     VStack(alignment: .leading) {
-                        Text("Set \(set.setNum)")
-                            .font(.system(size: 16, design: .monospaced))
-                            .fontWeight(.semibold)
+                            Text("Set \(set.setNum)")
+                                .font(.system(size: 16, design: .monospaced))
+                                .fontWeight(.semibold)
                         
-                        
-                        Text(getPrettyWeight(reps: set.reps))
-                            .font(.system(size: 16, design: .monospaced))
-                            .fontWeight(.semibold)
-                            .padding(.top, 4)
+                        HStack(spacing: 4) {
+                            Text(getPrettyWeight(reps: set.reps))
+                                .font(.system(size: 16, design: .monospaced))
+                                .fontWeight(.semibold)
+                            
+                            if let percentage = set.percentage {
+                                Text("(\(String(format: "%.0f", percentage * 100))%)")
+                                    .font(.system(size: 16, design: .monospaced))
+                                    .fontWeight(.semibold)
+                            }
+                        }
+                        .padding(.top, 4)
+                            
                     }
                     
                     Spacer()
@@ -70,9 +78,11 @@ struct WorkoutSetCell: View {
                 
             }
         }
-        .sheet(isPresented: $showEditSheet) {
-            EmptyView()
-        }
+//        .sheet(isPresented: $showEditSheet) {
+//            Form {
+//                TextField("")
+//            }
+//        }
         .frame(minWidth: 0, maxWidth: .infinity)
         .padding(.horizontal)
         .padding(.vertical, 8)
@@ -84,6 +94,7 @@ struct WorkoutSetCell: View {
                 self.hasSetAmrap = true
                 updateSetAttr()
             })
+            .foregroundStyle(.primaryBrand)
         }
         .onAppear {
             self.amrap = set.reps
@@ -114,5 +125,6 @@ struct WorkoutSetCell: View {
 }
 
 //#Preview {
-//    WorkoutSetCell()
+//    WorkoutSetCell(set: WorkoutSet(id: UUID(), setNum: 1, liftType: .squat, liftName: LiftType.squat.rawValue, workoutSection: .main, weight: 200, reps: 5, percentage: 0.75), updateSet: { print($0) }, startRestTimer: {})
+//        .modelContainer(for: [Workout.self, WorkoutSet.self])
 //}

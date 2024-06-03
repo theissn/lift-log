@@ -44,6 +44,7 @@ struct HomeView: View {
                                 VStack(alignment: .leading) {
                                     Text("\(lift.rawValue)")
                                         .font(.system(size: 16, design: .monospaced))
+                                        .foregroundColor(.primary)
                                 }
                                 
                                 Spacer()
@@ -51,6 +52,7 @@ struct HomeView: View {
                                 VStack {
                                     Text(viewModel.getTopSet(lift: lift))
                                         .font(.system(size: 14, design: .monospaced))
+                                        .foregroundColor(.primary)
                                 }
                             }
                         }
