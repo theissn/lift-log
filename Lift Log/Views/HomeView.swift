@@ -59,7 +59,6 @@ struct HomeView: View {
                         .frame(maxWidth: .infinity)
                         .padding()
                         .background(Color(.systemGray4))
-                        .cornerRadius(12)
                     }
                 }
                 .padding(.horizontal)

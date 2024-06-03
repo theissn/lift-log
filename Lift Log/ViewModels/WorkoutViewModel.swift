@@ -48,6 +48,10 @@ class WorkoutViewModel: ObservableObject {
     
     private func getWarmupSets(lift: LiftType, weight: Double) -> [WorkoutSet] {
         var sets: [WorkoutSet] = []
+        
+        if self.week == 4 {
+            return sets
+        }
 
         for (index, percentage) in [0.4, 0.5, 0.6].enumerated() {
             let liftWeight = (weight * (self.trainingMax / 100)) * percentage

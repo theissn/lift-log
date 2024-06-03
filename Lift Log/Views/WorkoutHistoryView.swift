@@ -13,7 +13,6 @@ struct WorkoutHistoryView: View {
     @Query(sort: \Workout.endTime, order: .reverse)
     var workouts: [Workout] = []
     
-    
     var body: some View {
         NavigationStack {
             VStack(alignment: .leading) {
@@ -33,22 +32,45 @@ struct WorkoutHistoryView: View {
                             } label: {
                                 VStack {
                                     HStack {
-                                        Text(workout.liftType.rawValue)
-                                            .font(.system(size: 16, design: .monospaced))
-                                            .fontWeight(.bold)
-                                        Spacer()
+                                        VStack(alignment: .leading) {
+                                            Text("Cycle \(workout.week)")
+                                                .font(.system(size: 14, design: .monospaced))
+                                                .fontWeight(.black)
+                                                .padding(.bottom, 8)
+
+                                            HStack(alignment: .bottom) {
+                                                VStack(alignment: .leading) {
+                                                    Text(workout.liftType.rawValue)
+                                                        .font(.system(size: 14, design: .monospaced))
+                                                    
+                                                    Text(topSetPretty(workout))
+                                                        .font(.system(size: 14, design: .monospaced))
+                                                }
+                                                
+                                                Spacer()
+                                                
+                                                Text(dateFormatter(workout.endTime))
+                                                    .font(.system(size: 13, design: .monospaced))
+
+                                            }
+                                        }
+                                        .foregroundColor(.primary)
+
                                         
-                                        Text(dateFormatter(workout.endTime))
-                                            .font(.system(size: 16, design: .monospaced))
+//                                        Spacer()
+//                                        
+//                                        VStack(alignment: .trailing) {
+//                                        }
                                     }
                                 }
                                 .frame(maxWidth: .infinity)
                                 .padding()
                                 .background(Color(.systemGray4))
-                                .cornerRadius(12)
                             }
+                            .padding(.bottom, 8)
                         }
                     }
+                    .padding()
                 }
             }
         }
@@ -60,6 +82,17 @@ struct WorkoutHistoryView: View {
         dateFormatter.timeStyle = .short
         
         return dateFormatter.string(from: date)
+    }
+    
+    func topSetPretty(_ workout: Workout) -> String {
+        let unit = UserDefaults.standard.string(forKey: "unit") ?? "kg"
+        let set = workout.workoutSets.sorted(by: { $0.weight > $1.weight }).first
+        
+        if let set = set {
+            return "\(set.reps) @ \(set.weight)\(unit)"
+        }
+        
+        return ""
     }
 }
 

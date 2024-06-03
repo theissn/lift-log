@@ -81,70 +81,73 @@ struct AddSetView: View {
                         TextField("Sets", value: $count, formatter: NumberFormatter())
                             .multilineTextAlignment(.trailing)
                     }
-                    
-                    HStack {
-                        Spacer()
-                        
-                        Button("Add Set") {
-                            for num in 0..<count {
-                                var newWeight = weight
-                                
-                                if type == "percentage" {
-                                    newWeight = tmax * (weight / 100)
-                                    newWeight = Formatter.roundToNearest2dot5(number: newWeight, isKg: true)
-                                    
-                                    print(newWeight, weight)
-                                }
-                                
-                                let workout = WorkoutSet(id: UUID(), setNum: setNumber + num, liftType: .accessory, liftName: self.workout, workoutSection: .assistance, weight: newWeight, reps: self.reps)
-                                
-                                addLift(workout)
-                            }
-                            
-                            dismiss()
-                        }
-                            .foregroundStyle(.primaryBrand)
-                        
-                        Spacer()
-                    }
                 }
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        self.showAddLiftAlert.toggle()
-                    } label: {
-                        HStack {
-                            Text("Add Lift")
-                        }
-                        .foregroundStyle(.primaryBrand)
-                    }
-                    .alert("Add Lift", isPresented: $showAddLiftAlert) {
-                        TextField("Lift Name", text: $lift)
-                        
-                        Button(role: .cancel) {
-                            self.showAddLiftAlert.toggle()
-                        } label: {
-                            Text("Cancel")
-                        }
-                        
-                        Button {
-                            let lift = Lift(id: UUID(), name: self.lift)
-                            self.context.insert(lift)
+                    Button("Add Set(s)") {
+                        for num in 0..<count {
+                            var newWeight = weight
                             
-                            self.showAddLiftAlert.toggle()
-                        } label: {
-                            Text("Save")
+                            if type == "percentage" {
+                                newWeight = tmax * (weight / 100)
+                                newWeight = Formatter.roundToNearest2dot5(number: newWeight, isKg: true)
+                                
+                                print(newWeight, weight)
+                            }
+                            
+                            let workout = WorkoutSet(id: UUID(), setNum: setNumber + num, liftType: .accessory, liftName: self.workout, workoutSection: .assistance, weight: newWeight, reps: self.reps)
+                            
+                            print(workout.liftName)
+                            
+//                            return
+                            
+                            addLift(workout)
                         }
+                        
+                        dismiss()
                     }
+                    .foregroundStyle(.primaryBrand)
                 }
+//                ToolbarItem(placement: .topBarTrailing) {
+//                    Button {
+//                        self.showAddLiftAlert.toggle()
+//                    } label: {
+//                        HStack {
+//                            Text("Add Lift")
+//                        }
+//                        .foregroundStyle(.primaryBrand)
+//                    }
+//                    .alert("Add Lift", isPresented: $showAddLiftAlert) {
+//                        TextField("Lift Name", text: $lift)
+//                        
+//                        Button(role: .cancel) {
+//                            self.showAddLiftAlert.toggle()
+//                        } label: {
+//                            Text("Cancel")
+//                        }
+//                        
+//                        Button {
+//                            let lift = Lift(id: UUID(), name: self.lift)
+//                            self.context.insert(lift)
+//                            
+//                            self.showAddLiftAlert.toggle()
+//                        } label: {
+//                            Text("Save")
+//                        }
+//                    }
+//                }
             }
             .onAppear {
                 initialSetupLifts()
                 
+                print(lifts)
+                
                 if let name = lifts.first?.name {
                     self.workout = name
                 }
+                
+                print(self.workout)
             }
         }
     }

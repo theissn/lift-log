@@ -10,6 +10,7 @@
 		C60D7DF92C0DB5AC009F7577 /* AddSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D7DF82C0DB5AC009F7577 /* AddSetView.swift */; };
 		C60D7DFB2C0DB718009F7577 /* Lift.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D7DFA2C0DB718009F7577 /* Lift.swift */; };
 		C60D7DFD2C0DC7D1009F7577 /* WorkoutHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D7DFC2C0DC7D1009F7577 /* WorkoutHistoryView.swift */; };
+		C60D7DFF2C0E0789009F7577 /* TextEditorWithLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D7DFE2C0E0789009F7577 /* TextEditorWithLabel.swift */; };
 		C69D25422C08556500023131 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69D25412C08556500023131 /* Formatter.swift */; };
 		C69D25452C08563F00023131 /* WorkoutSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69D25442C08563F00023131 /* WorkoutSetCell.swift */; };
 		C69EAFA02C0736C50086077A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69EAF9F2C0736C50086077A /* SettingsViewModel.swift */; };
@@ -31,6 +32,7 @@
 		C60D7DF82C0DB5AC009F7577 /* AddSetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSetView.swift; sourceTree = "<group>"; };
 		C60D7DFA2C0DB718009F7577 /* Lift.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lift.swift; sourceTree = "<group>"; };
 		C60D7DFC2C0DC7D1009F7577 /* WorkoutHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryView.swift; sourceTree = "<group>"; };
+		C60D7DFE2C0E0789009F7577 /* TextEditorWithLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorWithLabel.swift; sourceTree = "<group>"; };
 		C69D253F2C07C4A900023131 /* Lift-Log-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Lift-Log-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C69D25412C08556500023131 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		C69D25442C08563F00023131 /* WorkoutSetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSetCell.swift; sourceTree = "<group>"; };
@@ -73,6 +75,7 @@
 			isa = PBXGroup;
 			children = (
 				C69D25442C08563F00023131 /* WorkoutSetCell.swift */,
+				C60D7DFE2C0E0789009F7577 /* TextEditorWithLabel.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -227,6 +230,7 @@
 				D06DA5D52BF610BE00DE2F6E /* WorkoutView.swift in Sources */,
 				D06DA5C62BF6108D00DE2F6E /* Lift_LogApp.swift in Sources */,
 				C69EAFA42C0737650086077A /* SettingsView.swift in Sources */,
+				C60D7DFF2C0E0789009F7577 /* TextEditorWithLabel.swift in Sources */,
 				C69D25422C08556500023131 /* Formatter.swift in Sources */,
 				D069499E2BF7335600F1BD89 /* WorkoutViewModel.swift in Sources */,
 				C69D25452C08563F00023131 /* WorkoutSetCell.swift in Sources */,

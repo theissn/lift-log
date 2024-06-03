@@ -24,9 +24,14 @@ struct WorkoutView: View {
     @State var showCancelAlert = false
     @State var showCompleteAlert = false
     @State var showAddSetSheet = false
+    @State var notesText = ""
     
     var hasAssistanceSets: Bool {
         return sets.filter({ $0.workoutSection == .assistance }).isEmpty == false
+    }
+
+    var hasWarmupSets: Bool {
+        return sets.filter({ $0.workoutSection == .warmup }).isEmpty == false
     }
     
     @ObservedObject var viewModel: WorkoutViewModel
@@ -89,7 +94,7 @@ struct WorkoutView: View {
                                 .padding(.bottom, 8)
                             
                             HStack {
-                                Text(self.viewModel.lift.rawValue)
+                                Text(self.workout?.liftType.rawValue ?? self.viewModel.lift.rawValue)
                                     .font(.system(size: 20, design: .monospaced))
                                 
                                 Button {
@@ -125,28 +130,30 @@ struct WorkoutView: View {
                         Divider()
                             .padding(.top)
                         
-                        HStack {
-                            Text("WARM-UP")
-                                .fontWeight(.bold)
-                                .font(.system(size: 14, design: .monospaced))
-                                .padding(.vertical, 8)
+                        if hasWarmupSets {
+                            HStack {
+                                Text("WARM-UP")
+                                    .fontWeight(.bold)
+                                    .font(.system(size: 14, design: .monospaced))
+                                    .padding(.vertical, 8)
+                                
+                                Spacer()
+                            }
+                            .padding(.horizontal)
                             
-                            Spacer()
-                        }
-                        .padding(.horizontal)
-                        
-                        
-                        ForEach(sets.filter({ $0.workoutSection == .warmup })) { set in
-                            WorkoutSetCell(
-                                set: set,
-                                updateSet: {
-                                    updateSet($0)
-                                },
-                                startRestTimer: self.startRestTimer,
-                                canUpdate: self.workout == nil
-                            )
                             
-                            Divider()
+                            ForEach(sets.filter({ $0.workoutSection == .warmup })) { set in
+                                WorkoutSetCell(
+                                    set: set,
+                                    updateSet: {
+                                        updateSet($0)
+                                    },
+                                    startRestTimer: self.startRestTimer,
+                                    canUpdate: self.workout == nil
+                                )
+                                
+                                Divider()
+                            }
                         }
                         
                         HStack {
@@ -209,13 +216,16 @@ struct WorkoutView: View {
                                 .foregroundColor(.primary)
                                 .frame(maxWidth: .infinity)
                                 .padding()
-                                .background(Color(.systemGray6))
+                                .background(Color(.systemGray4))
                             }
                             .padding()
                             .sheet(isPresented: $showAddSetSheet) {
                                 AddSetView(setNumber: self.sets.count + 1, tmax: viewModel.getTrainingMax(lift: self.viewModel.lift), addLift: { self.sets.append($0) })
                             }
                         }
+                        
+                        TextEditorWithLabel(text: $notesText, label: "Workout Notes", isDisabled: self.workout != nil)
+                            .padding()
                     }
                 }
             }
@@ -257,11 +267,15 @@ struct WorkoutView: View {
                                     print(set.id, set.completedAt, set.reps, set.setNum, set.percentage)
                                 }
                                 
+                                print(self.notesText)
+                                
                                 let workout = Workout(
                                     id: UUID(),
+                                    week: self.viewModel.week,
                                     startTime: self.startTime,
                                     endTime: Date(),
                                     liftType: self.viewModel.lift,
+                                    notes: self.notesText,
                                     workoutSets: self.sets
                                 )
                                 
@@ -281,10 +295,11 @@ struct WorkoutView: View {
         }
         .onAppear {
             if let workout = self.workout {
-                self.sets = workout.workoutSets
+                self.sets = workout.workoutSets.sorted(by: { $0.setNum < $1.setNum })
                 self.startTime = workout.startTime
+                self.notesText = workout.notes ?? ""
                 
-                calcWorkoutDuration()
+                calcWorkoutDuration(workout.endTime)
                 
                 return
             }
@@ -301,8 +316,13 @@ struct WorkoutView: View {
         }
     }
     
-    private func calcWorkoutDuration() {
-        let now = Date()
+    private func calcWorkoutDuration(_ nowTime: Date? = nil) {
+        var now = Date()
+        
+        if let nowTime = nowTime {
+            now = nowTime
+        }
+        
         let difference = Calendar.current.dateComponents([.hour, .minute], from: startTime, to: now)
         
         let formatter = DateComponentsFormatter()
