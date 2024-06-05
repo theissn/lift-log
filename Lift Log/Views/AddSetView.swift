@@ -98,6 +98,10 @@ struct AddSetView: View {
                             
                             let workout = WorkoutSet(id: UUID(), setNum: setNumber + num, liftType: .accessory, liftName: self.workout, workoutSection: .assistance, weight: newWeight, reps: self.reps)
                             
+                            if type == "percentage" {
+                                workout.percentage = weight / 100
+                            }
+                            
                             print(workout.liftName)
                             
 //                            return

@@ -25,6 +25,7 @@ struct WorkoutView: View {
     @State var showCompleteAlert = false
     @State var showAddSetSheet = false
     @State var notesText = ""
+    @State var showUpsellSheet = false
     
     var hasAssistanceSets: Bool {
         return sets.filter({ $0.workoutSection == .assistance }).isEmpty == false
@@ -108,8 +109,9 @@ struct WorkoutView: View {
                         }
                         .frame(minWidth: 0, maxWidth: .infinity)
                         .padding()
-                        .border(Color(.systemGray4).opacity(0.8))
-                        
+                        .border(Color(.systemGray4))
+                        .opacity(0.8)
+     
                         VStack {
                             Text("Day")
                                 .fontWeight(.bold)
@@ -263,11 +265,15 @@ struct WorkoutView: View {
                             .foregroundColor(.primary)
                             
                             Button {
-                                for set in sets {
-                                    print(set.id, set.completedAt, set.reps, set.setNum, set.percentage)
-                                }
+//                                self.showUpsellSheet.toggle()
+//                                let descriptor = FetchDescriptor<Workout>()
+//                                let count = (try? modelContext.fetchCount(descriptor)) ?? 0
+//
+//                                print(count)
+//                                
+//                                return
                                 
-                                print(self.notesText)
+//                                print(self.notesText)
                                 
                                 let workout = Workout(
                                     id: UUID(),
@@ -288,6 +294,10 @@ struct WorkoutView: View {
                                 Text("Save")
                                     .foregroundColor(.primaryBrand)
                             }
+                        }
+                        .sheet(isPresented: $showUpsellSheet) {
+                            SaveWorkoutUpsellSheet()
+                                .interactiveDismissDisabled()
                         }
                     }
                 }
