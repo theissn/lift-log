@@ -31,7 +31,7 @@ class WorkoutViewModel: ObservableObject {
         let weight = self.getWeight(lift: lift)
         let liftWeight = (weight * (self.trainingMax / 100)) * percentage
         
-        let prettyWeight = Formatter.roundToNearest2dot5(number: liftWeight)
+        let prettyWeight = Formatter.roundToNearestPlate(number: liftWeight)
         
         return "\(reps)+ @ \(prettyWeight) \(unit)"
     }
@@ -62,7 +62,7 @@ class WorkoutViewModel: ObservableObject {
                 liftType: lift,
                 liftName: lift.rawValue,
                 workoutSection: .warmup,
-                weight: Formatter.roundToNearest2dot5(number: liftWeight),
+                weight: Formatter.roundToNearestPlate(number: liftWeight),
                 reps: 5,
                 percentage: percentage
             ))
@@ -85,7 +85,7 @@ class WorkoutViewModel: ObservableObject {
                 liftType: lift,
                 liftName: lift.rawValue,
                 workoutSection: .main,
-                weight: Formatter.roundToNearest2dot5(number: liftWeight),
+                weight: Formatter.roundToNearestPlate(number: liftWeight),
                 reps: reps[index],
                 amrap: index == 2 ? 0 : nil,
                 percentage: percentage
@@ -139,7 +139,7 @@ class WorkoutViewModel: ObservableObject {
     func getTrainingMax(lift: LiftType) -> Double {
         let weight = self.getWeight(lift: lift)
         let liftWeight = weight * (self.trainingMax / 100)
-        let prettyWeight = Formatter.roundToNearest2dot5(number: liftWeight)
+        let prettyWeight = Formatter.roundToNearestPlate(number: liftWeight)
         
         return prettyWeight
         

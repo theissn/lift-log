@@ -9,13 +9,13 @@ import SwiftUI
 
 struct WorkoutSetCell: View {
     @State var set: WorkoutSet
-    
     @State var showEditSheet = false
     @State var showAmrapPopup = false
     @State var amrap: Int = 0
     @State var hasSetAmrap = false
     
     var updateSet: (_ set: WorkoutSet) -> Void
+    var deleteSet: (_ set: WorkoutSet) -> Void
     var startRestTimer: () -> Void
     var showLiftName: Bool = false
     var canUpdate: Bool = true
@@ -29,10 +29,10 @@ struct WorkoutSetCell: View {
                     Image(systemName: "square.and.pencil")
                         .font(.system(size: 18, weight: .regular, design: .monospaced))
                         .foregroundColor(.primary)
-                        .opacity(canUpdate ? 1 : 0.5)
+                        .opacity((canUpdate && set.workoutSection == .assistance) ? 1 : 0.5)
                 }
                 .padding(.trailing, 8)
-                .disabled(!canUpdate)
+                .disabled(!canUpdate || set.workoutSection != .assistance)
                 
                 Button {
                     if !canUpdate {
@@ -94,11 +94,11 @@ struct WorkoutSetCell: View {
                 
             }
         }
-//        .sheet(isPresented: $showEditSheet) {
-//            Form {
-//                TextField("")
-//            }
-//        }
+        .sheet(isPresented: $showEditSheet) {
+            EditSetView(set: self.set, deleteSet: {
+                self.deleteSet(self.set)
+            })
+        }
         .frame(minWidth: 0, maxWidth: .infinity)
         .padding(.horizontal)
         .padding(.vertical, 8)

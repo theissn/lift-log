@@ -8,10 +8,12 @@
 import Foundation
 
 class Formatter {
-    static func roundToNearest2dot5(number: Double, isKg: Bool = true) -> Double {
-        let scaled = ceil(number / 2.5)
+    static func roundToNearestPlate(number: Double, isKg: Bool = true) -> Double {
+        let numberToAimFor = isKg ? 2.5 : 5
+        
+        let scaled = ceil(number / numberToAimFor)
         let rounded = scaled.rounded() // Use standard rounding
-        let final = rounded * 2.5
+        let final = rounded * numberToAimFor
         
         let minValue: Double = isKg ? 20 : 45
         

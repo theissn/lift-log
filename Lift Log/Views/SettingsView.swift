@@ -29,6 +29,8 @@ struct SettingsView: View {
                         LiftInputRow(name: "Bench", value: $viewModel.benchMax, unit: viewModel.unit, isFocused: $isFocused)
                         LiftInputRow(name: "OHP", value: $viewModel.ohpMax, unit: viewModel.unit, isFocused: $isFocused)
                         
+                        Divider()
+                        
                         HStack {
                             ZStack {
                                 Circle()

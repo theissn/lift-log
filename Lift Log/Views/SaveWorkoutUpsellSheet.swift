@@ -9,11 +9,15 @@ import SwiftUI
 import StoreKit
 
 struct SaveWorkoutUpsellSheet: View {
-    @State private var timeRemaining = 12
-    @State private var products: [Product] = []
-    let productIds = ["lift_log_premium", "lift_log_premium_annual"]
+    @Environment(\.dismiss) var dismiss
     
+    @State private var timeRemaining = 7
+    @State private var products: [Product] = []
+    
+    let productIds = ["lift_log_premium", "lift_log_premium_annual"]
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
+    var dismissParent: () -> Void
     
     var body: some View {
         NavigationStack {
@@ -94,15 +98,15 @@ struct SaveWorkoutUpsellSheet: View {
                     ToolbarItem(placement: .topBarTrailing) {
                         VStack {
                             if timeRemaining > 0 {
-                                ProgressView(value: Double(timeRemaining), total: 12)
+                                ProgressView(value: Double(timeRemaining), total: 7)
                                     .progressViewStyle(CircularProgressViewStyle())
                                     .frame(width: 24, height: 24)
                                     .padding()
                             } else {
                                 Button {
-                                    
+                                    dismissParent()
                                 } label: {
-                                    Text("Continue")
+                                    Text("Skip")
                                         .font(.system(size: 16, design: .monospaced))
                                 }
                                 .tint(.primaryBrand)
@@ -145,7 +149,7 @@ struct CircularProgressViewStyle: ProgressViewStyle {
                 .stroke(style: StrokeStyle(lineWidth: 2, lineCap: .round, lineJoin: .round))
                 .foregroundColor(.primaryBrand)
                 .rotationEffect(.degrees(-90))
-                .animation(.easeInOut)
+                .animation(.easeInOut, value: configuration.fractionCompleted)
         }
     }
 }
@@ -153,6 +157,6 @@ struct CircularProgressViewStyle: ProgressViewStyle {
 #Preview {
     VStack {}
         .sheet(isPresented: .constant(true), content: {
-            SaveWorkoutUpsellSheet()
+            SaveWorkoutUpsellSheet(dismissParent: {})
         })
 }

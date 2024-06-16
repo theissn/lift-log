@@ -33,23 +33,23 @@ struct WorkoutHistoryView: View {
                                     HStack {
                                         ZStack {
                                             Circle()
-                                                .stroke(lineWidth: 2)
+                                                .stroke(lineWidth: 1)
                                                 .foregroundStyle(.primaryBrand)
-                                                .frame(width: 48, height: 48)
+                                                .frame(width: 32, height: 32)
                                             
                                             Text("\(workout.liftType.rawValue[0])")
                                                 .foregroundStyle(.primaryBrand)
-                                                .font(.system(size: 20, design: .monospaced))
-                                                .fontWeight(.black)
+                                                .font(.system(size: 16, design: .monospaced))
+                                                .fontWeight(.bold)
 
                                         }
-                                        .padding(.trailing)
+                                        .padding(.trailing, 4)
                                         
                                         VStack(alignment: .leading) {
                                             HStack(alignment: .bottom) {
                                                 Text("Cycle \(workout.week)")
                                                     .font(.system(size: 16, design: .monospaced))
-                                                    .fontWeight(.black)
+                                                    .fontWeight(.bold)
 //                                                    .padding(.bottom, 8)
                                                 
                                                 Spacer()
@@ -72,8 +72,8 @@ struct WorkoutHistoryView: View {
                                                 Spacer()
                                                 
                                                     Text(workout.liftType.rawValue)
-                                                        .font(.system(size: 14, design: .monospaced))
-                                                        .fontWeight(.light)
+                                                        .font(.system(size: 16, design: .monospaced))
+                                                        .fontWeight(.bold)
 //                                                }
                                                 
 //                                                Spacer()
@@ -95,6 +95,7 @@ struct WorkoutHistoryView: View {
                                 .frame(maxWidth: .infinity)
                                 .padding()
                                 .background(Color(.systemGray4))
+                                .cornerRadius(10)
                             }
                             .padding(.bottom, 8)
                         }

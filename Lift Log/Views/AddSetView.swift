@@ -91,9 +91,7 @@ struct AddSetView: View {
                             
                             if type == "percentage" {
                                 newWeight = tmax * (weight / 100)
-                                newWeight = Formatter.roundToNearest2dot5(number: newWeight, isKg: true)
-                                
-                                print(newWeight, weight)
+                                newWeight = Formatter.roundToNearestPlate(number: newWeight, isKg: true)
                             }
                             
                             let workout = WorkoutSet(id: UUID(), setNum: setNumber + num, liftType: .accessory, liftName: self.workout, workoutSection: .assistance, weight: newWeight, reps: self.reps)
@@ -101,10 +99,6 @@ struct AddSetView: View {
                             if type == "percentage" {
                                 workout.percentage = weight / 100
                             }
-                            
-                            print(workout.liftName)
-                            
-//                            return
                             
                             addLift(workout)
                         }
@@ -144,14 +138,10 @@ struct AddSetView: View {
             }
             .onAppear {
                 initialSetupLifts()
-                
-                print(lifts)
-                
+                                
                 if let name = lifts.first?.name {
                     self.workout = name
                 }
-                
-                print(self.workout)
             }
         }
     }

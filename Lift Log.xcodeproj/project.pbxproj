@@ -13,6 +13,8 @@
 		C60D7DFF2C0E0789009F7577 /* TextEditorWithLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C60D7DFE2C0E0789009F7577 /* TextEditorWithLabel.swift */; };
 		C62E8D2E2C102E82004DD87C /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62E8D2D2C102E82004DD87C /* String.swift */; };
 		C62E8D302C10370F004DD87C /* SaveWorkoutUpsellSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62E8D2F2C10370F004DD87C /* SaveWorkoutUpsellSheet.swift */; };
+		C62E8D322C10D87B004DD87C /* EditSetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62E8D312C10D87B004DD87C /* EditSetView.swift */; };
+		C62E8D342C10DEC2004DD87C /* PlaygroundView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C62E8D332C10DEC2004DD87C /* PlaygroundView.swift */; };
 		C69D25422C08556500023131 /* Formatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69D25412C08556500023131 /* Formatter.swift */; };
 		C69D25452C08563F00023131 /* WorkoutSetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69D25442C08563F00023131 /* WorkoutSetCell.swift */; };
 		C69EAFA02C0736C50086077A /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C69EAF9F2C0736C50086077A /* SettingsViewModel.swift */; };
@@ -37,6 +39,8 @@
 		C60D7DFE2C0E0789009F7577 /* TextEditorWithLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorWithLabel.swift; sourceTree = "<group>"; };
 		C62E8D2D2C102E82004DD87C /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		C62E8D2F2C10370F004DD87C /* SaveWorkoutUpsellSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveWorkoutUpsellSheet.swift; sourceTree = "<group>"; };
+		C62E8D312C10D87B004DD87C /* EditSetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSetView.swift; sourceTree = "<group>"; };
+		C62E8D332C10DEC2004DD87C /* PlaygroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundView.swift; sourceTree = "<group>"; };
 		C69D253F2C07C4A900023131 /* Lift-Log-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Lift-Log-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C69D25412C08556500023131 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		C69D25442C08563F00023131 /* WorkoutSetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSetCell.swift; sourceTree = "<group>"; };
@@ -144,6 +148,8 @@
 				C60D7DF82C0DB5AC009F7577 /* AddSetView.swift */,
 				C60D7DFC2C0DC7D1009F7577 /* WorkoutHistoryView.swift */,
 				C62E8D2F2C10370F004DD87C /* SaveWorkoutUpsellSheet.swift */,
+				C62E8D312C10D87B004DD87C /* EditSetView.swift */,
+				C62E8D332C10DEC2004DD87C /* PlaygroundView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -239,11 +245,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				D08ABE3F2BF6A4D800A0873D /* WorkoutSet.swift in Sources */,
+				C62E8D322C10D87B004DD87C /* EditSetView.swift in Sources */,
 				D06949A02BF7336B00F1BD89 /* HomeView.swift in Sources */,
 				D06DA5C82BF6108D00DE2F6E /* ContentView.swift in Sources */,
 				C62E8D302C10370F004DD87C /* SaveWorkoutUpsellSheet.swift in Sources */,
 				D06DA5D52BF610BE00DE2F6E /* WorkoutView.swift in Sources */,
 				D06DA5C62BF6108D00DE2F6E /* Lift_LogApp.swift in Sources */,
+				C62E8D342C10DEC2004DD87C /* PlaygroundView.swift in Sources */,
 				C69EAFA42C0737650086077A /* SettingsView.swift in Sources */,
 				C60D7DFF2C0E0789009F7577 /* TextEditorWithLabel.swift in Sources */,
 				C69D25422C08556500023131 /* Formatter.swift in Sources */,
@@ -394,11 +402,13 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Lift-Log-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Lift Log";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -406,9 +416,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.finurligsoftware.Lift-Log";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -424,11 +438,13 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Lift-Log-Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "Lift Log";
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.healthcare-fitness";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -436,9 +452,13 @@
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.finurligsoftware.Lift-Log";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

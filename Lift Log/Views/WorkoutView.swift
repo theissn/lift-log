@@ -30,7 +30,7 @@ struct WorkoutView: View {
     var hasAssistanceSets: Bool {
         return sets.filter({ $0.workoutSection == .assistance }).isEmpty == false
     }
-
+    
     var hasWarmupSets: Bool {
         return sets.filter({ $0.workoutSection == .warmup }).isEmpty == false
     }
@@ -111,7 +111,7 @@ struct WorkoutView: View {
                         .padding()
                         .border(Color(.systemGray4))
                         .opacity(0.8)
-     
+                        
                         VStack {
                             Text("Day")
                                 .fontWeight(.bold)
@@ -150,6 +150,7 @@ struct WorkoutView: View {
                                     updateSet: {
                                         updateSet($0)
                                     },
+                                    deleteSet: { deleteSet($0) },
                                     startRestTimer: self.startRestTimer,
                                     canUpdate: self.workout == nil
                                 )
@@ -174,6 +175,7 @@ struct WorkoutView: View {
                                 updateSet: {
                                     updateSet($0)
                                 },
+                                deleteSet: { deleteSet($0) },
                                 startRestTimer: self.startRestTimer,
                                 canUpdate: self.workout == nil
                             )
@@ -199,8 +201,9 @@ struct WorkoutView: View {
                                 updateSet: {
                                     updateSet($0)
                                 },
+                                deleteSet: { deleteSet($0) },
                                 startRestTimer: self.startRestTimer,
-                                showLiftName: true,
+                                showLiftName: self.viewModel.lift.rawValue != set.liftName,
                                 canUpdate: self.workout == nil
                             )
                             
@@ -265,15 +268,12 @@ struct WorkoutView: View {
                             .foregroundColor(.primary)
                             
                             Button {
-//                                self.showUpsellSheet.toggle()
-//                                let descriptor = FetchDescriptor<Workout>()
-//                                let count = (try? modelContext.fetchCount(descriptor)) ?? 0
-//
-//                                print(count)
-//                                
-//                                return
-                                
-//                                print(self.notesText)
+                                let descriptor = FetchDescriptor<Workout>()
+                                let count = (try? context.fetchCount(descriptor)) ?? 0
+      
+                                if count > 3 {
+                                    self.showUpsellSheet.toggle()
+                                }
                                 
                                 let workout = Workout(
                                     id: UUID(),
@@ -285,18 +285,20 @@ struct WorkoutView: View {
                                     workoutSets: self.sets
                                 )
                                 
-                                print(workout)
-                                
                                 context.insert(workout)
                                 
-                                dismiss()
+                                if count <= 3 {
+                                    dismiss()
+                                }
                             } label: {
                                 Text("Save")
                                     .foregroundColor(.primaryBrand)
                             }
                         }
                         .sheet(isPresented: $showUpsellSheet) {
-                            SaveWorkoutUpsellSheet()
+                            SaveWorkoutUpsellSheet(dismissParent: {
+                                dismiss()
+                            })
                                 .interactiveDismissDisabled()
                         }
                     }
@@ -380,6 +382,12 @@ struct WorkoutView: View {
         
         if set.completedAt == nil {
             self.stopRestTimer()
+        }
+    }
+    
+    private func deleteSet(_ set: WorkoutSet) {
+        if let index = sets.firstIndex(where: { $0.id == set.id }) {
+            sets.remove(at: index)
         }
     }
     
