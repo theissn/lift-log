@@ -41,24 +41,24 @@ struct HomeView: View {
                     } label: {
                         VStack(alignment: .leading) {
                             HStack {
-                                ZStack {
-                                    Circle()
-                                        .stroke(lineWidth: 1)
-                                        .foregroundStyle(.primaryBrand)
-                                        .frame(width: 32, height: 32)
-                                    
-                                    Text("\(lift.rawValue[0])")
-                                        .foregroundStyle(.primaryBrand)
-                                        .font(.system(size: 16, design: .monospaced))
-                                        .fontWeight(.bold)
-
-                                }
-                                .padding(.trailing, 4)
+//                                ZStack {
+//                                    Circle()
+//                                        .stroke(lineWidth: 1)
+//                                        .foregroundStyle(.primaryBrand)
+//                                        .frame(width: 32, height: 32)
+//                                    
+//                                    Text("\(lift.rawValue[0])")
+//                                        .foregroundStyle(.primaryBrand)
+//                                        .font(.system(size: 16, design: .monospaced))
+//                                        .fontWeight(.bold)
+//
+//                                }
+//                                .padding(.trailing, 4)
                                 
                                 VStack(alignment: .leading) {
                                     Text("\(lift.rawValue)")
                                         .font(.system(size: 16, design: .monospaced))
-                                        .foregroundColor(.white)
+                                        .foregroundColor(.primary)
                                         .bold()
                                 }
                                 
@@ -67,7 +67,7 @@ struct HomeView: View {
                                 VStack {
                                     Text(viewModel.getTopSet(lift: lift))
                                         .font(.system(size: 14, design: .monospaced))
-                                        .foregroundColor(.white)
+                                        .foregroundColor(.primary)
                                         .bold()
                                 }
                             }

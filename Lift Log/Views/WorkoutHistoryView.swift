@@ -31,20 +31,6 @@ struct WorkoutHistoryView: View {
                             } label: {
                                 VStack {
                                     HStack {
-                                        ZStack {
-                                            Circle()
-                                                .stroke(lineWidth: 1)
-                                                .foregroundStyle(.primaryBrand)
-                                                .frame(width: 32, height: 32)
-                                            
-                                            Text("\(workout.liftType.rawValue[0])")
-                                                .foregroundStyle(.primaryBrand)
-                                                .font(.system(size: 16, design: .monospaced))
-                                                .fontWeight(.bold)
-
-                                        }
-                                        .padding(.trailing, 4)
-                                        
                                         VStack(alignment: .leading) {
                                             HStack(alignment: .bottom) {
                                                 Text("Cycle \(workout.week)")
