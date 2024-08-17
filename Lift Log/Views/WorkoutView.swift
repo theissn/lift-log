@@ -267,14 +267,7 @@ struct WorkoutView: View {
                             }
                             .foregroundColor(.primary)
                             
-                            Button {
-                                let descriptor = FetchDescriptor<Workout>()
-                                let count = (try? context.fetchCount(descriptor)) ?? 0
-      
-                                if count > 3 {
-                                    self.showUpsellSheet.toggle()
-                                }
-                                
+                            Button {                                
                                 let workout = Workout(
                                     id: UUID(),
                                     week: self.viewModel.week,
@@ -287,9 +280,7 @@ struct WorkoutView: View {
                                 
                                 context.insert(workout)
                                 
-                                if count <= 3 {
-                                    dismiss()
-                                }
+                                dismiss()
                             } label: {
                                 Text("Save")
                                     .foregroundColor(.primaryBrand)
