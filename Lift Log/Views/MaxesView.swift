@@ -75,7 +75,7 @@ struct MaxesView: View {
                     HStack {
                         Text("Weight")
                         
-                        TextField("Weight", value: $weight, formatter: NumberFormatter())
+                        TextField("Weight", value: $weight, format: .number)
                             .keyboardType(.decimalPad)
                             .multilineTextAlignment(.trailing)
                     }
@@ -85,8 +85,8 @@ struct MaxesView: View {
                     
                     HStack {
                         Text("Reps")
-                        TextField("Reps", value: $reps, formatter: NumberFormatter())
-                            .keyboardType(.decimalPad)
+                        TextField("Reps", value: $reps, format: .number)
+                            .keyboardType(.numberPad)
                             .multilineTextAlignment(.trailing)
                     }
                     .padding(8)

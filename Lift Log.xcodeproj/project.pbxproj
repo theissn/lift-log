@@ -41,7 +41,7 @@
 		C62E8D2F2C10370F004DD87C /* SaveWorkoutUpsellSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveWorkoutUpsellSheet.swift; sourceTree = "<group>"; };
 		C62E8D312C10D87B004DD87C /* EditSetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditSetView.swift; sourceTree = "<group>"; };
 		C62E8D332C10DEC2004DD87C /* PlaygroundView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaygroundView.swift; sourceTree = "<group>"; };
-		C69D253F2C07C4A900023131 /* Lift-Log-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "Lift-Log-Info.plist"; sourceTree = SOURCE_ROOT; };
+		C69D253F2C07C4A900023131 /* Lift-Log-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Lift-Log-Info.plist"; sourceTree = SOURCE_ROOT; };
 		C69D25412C08556500023131 /* Formatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Formatter.swift; sourceTree = "<group>"; };
 		C69D25442C08563F00023131 /* WorkoutSetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutSetCell.swift; sourceTree = "<group>"; };
 		C69EAF9F2C0736C50086077A /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
@@ -115,17 +115,17 @@
 		D06DA5C42BF6108D00DE2F6E /* Lift Log */ = {
 			isa = PBXGroup;
 			children = (
-				C62E8D2C2C102E79004DD87C /* Extensions */,
-				C69D25432C08563200023131 /* Components */,
-				C69D25402C08555D00023131 /* Helpers */,
-				C69D253F2C07C4A900023131 /* Lift-Log-Info.plist */,
-				D08ABE402BF6A5A100A0873D /* ViewModels */,
-				D08ABE3B2BF68E4C00A0873D /* Models */,
-				D06DA5D32BF610AA00DE2F6E /* Views */,
-				D06DA5C52BF6108D00DE2F6E /* Lift_LogApp.swift */,
-				D06DA5C72BF6108D00DE2F6E /* ContentView.swift */,
 				D06DA5C92BF6108D00DE2F6E /* Assets.xcassets */,
+				D06DA5C72BF6108D00DE2F6E /* ContentView.swift */,
+				D06DA5C52BF6108D00DE2F6E /* Lift_LogApp.swift */,
+				C69D253F2C07C4A900023131 /* Lift-Log-Info.plist */,
+				C69D25432C08563200023131 /* Components */,
+				C62E8D2C2C102E79004DD87C /* Extensions */,
+				C69D25402C08555D00023131 /* Helpers */,
+				D08ABE3B2BF68E4C00A0873D /* Models */,
 				D06DA5CB2BF6108D00DE2F6E /* Preview Content */,
+				D08ABE402BF6A5A100A0873D /* ViewModels */,
+				D06DA5D32BF610AA00DE2F6E /* Views */,
 			);
 			path = "Lift Log";
 			sourceTree = "<group>";
